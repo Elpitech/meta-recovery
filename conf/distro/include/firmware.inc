@@ -28,7 +28,7 @@ UBOOT_ENV_MTD_FILE ?= "/dev/mtd1"
 # in the machine-specific conf-files if needed to be.
 UBOOT_ENV_SIZE ?= "${@'${RECOVERY_ROM_ENVIRONMENT}'.split(':')[1]}"
 UBOOT_ENV_BUILD_IMAGE ?= "T-platforms ${MACHINE} (${DISTRO} ${DISTRO_VERSION}) boot ROM image"
-UBOOT_ENV_BUILD_VERSION ?= "${TPLATFORMS_SDK_VERSION}"
+UBOOT_ENV_BUILD_VERSION ?= "${TPSDK_VERSION}"
 UBOOT_ENV_CONSOLE ?= "${@'${SERIAL_CONSOLE}'.split(';')[1]}"
 UBOOT_ENV_BAUDRATE ?= "${@'${SERIAL_CONSOLE}'.split(';')[0]}"
 UBOOT_ENV_NUM_CORES ?= "2"
@@ -132,8 +132,8 @@ RECOVERY_HOSTNAME ?= "${MACHINE}"
 # to not exceed the image size limitations, since they can pull in some heavy denendencies.
 # NOTE Drop mtd-utils package if you want to speed the build up, since it got heavy dependencies.
 # There is still some mtd functionality embedded into the busybox binary.
-RECOVERY_IMAGE_EXTRA_INSTALL ?= "dropbear ethtool mtd-utils u-boot-fw-utils hdparm e2fsprogs e2fsprogs-e2fsck e2fsprogs-mke2fs e2fsprogs-tune2fs e2fsprogs-badblocks e2fsprogs-resize2fs dosfstools pciutils setserial lrzsz i2c-tools spi-tools lmsensors-sensors sysfsutils"
-RECOVERY_IMAGE_TEST_BENCHES ?= "rt-tests whetstone dhrystone memtester tinymembench libc-bench"
+RECOVERY_IMAGE_EXTRA_INSTALL ?= "dropbear ethtool mtd-utils u-boot-fw-utils hdparm parted e2fsprogs e2fsprogs-e2fsck e2fsprogs-mke2fs e2fsprogs-tune2fs e2fsprogs-badblocks e2fsprogs-resize2fs dosfstools pciutils setserial lrzsz i2c-tools spi-tools lmsensors-sensors sysfsutils recovery-image-info"
+RECOVERY_IMAGE_TEST_BENCHES ?= "rt-tests whetstone dhrystone memtester tinymembench stressapptest libc-bench dbench tbench fio nbench-byte sysbench stress-ng"
 # Glibc locales can be also added to the image, like en-gb or ru-ru. But you should note,
 # that they are too heavy, ~2Mb each so I wouldn't do this.
 RECOVERY_IMAGE_EXTRA_LINGUAS ?= ""

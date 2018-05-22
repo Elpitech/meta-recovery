@@ -4,7 +4,8 @@
 # SDK version is statically set here so to have at least some value used
 # by SDK-specific meta code.
 #
-TPLATFORMS_SDK_VERSION ?= "2.0-rc0"
+TPSDK_VERSION ?= "2.0"
+TPSDK_REVISION ?= "0"
 
 #
 # Yocto SDK settings
@@ -21,12 +22,12 @@ TPLATFORMS_SDK_VERSION ?= "2.0-rc0"
 #
 SDKMACHINE = "x86_64"
 SDK_VENDOR = "-tpsdk"
-SDK_VERSION := "${TPLATFORMS_SDK_VERSION}"
+SDK_VERSION := "${TPSDK_VERSION}"
 SDK_NAME = "${IMAGE_BASENAME}-${SDK_ARCH}-${TUNE_PKGARCH}"
 SDKPATH = "/opt/${DISTRO}${SDK_VENDOR}/${SDK_VERSION}"
 SDK_EXT_TYPE = "full"
 #SDKIMAGE_FEATURES_append = " staticdev-pkg"
-TOOLCHAIN_HOST_TASK_append = " nativesdk-flashrom nativesdk-openocd"
+TOOLCHAIN_HOST_TASK_append = " nativesdk-flashrom nativesdk-openocd nativesdk-recovery-image-info"
 TOOLCHAIN_TARGET_TASK_append = " kernel-devsrc"
 
 #
@@ -41,7 +42,7 @@ TOOLCHAIN_TARGET_TASK_append = " kernel-devsrc"
 TPSDK_SYS ?= "mipsel-unknown-linux-gnu"
 TPSDK_DIR ?= "/media/windows/WORKSPACE/IT/T-platforms/SFBT1/src/sdk"
 TPSDK_SRC ?= "sdk"
-TPSDK_XTC ?= "git"
+TPSDK_XTC ?= "sdk"
 TPSDK_KEYS_NAME ?= "baikal"
 TPSDK_KERNEL_DIR ?= "${TPSDK_DIR}/kernel"
 TPSDK_UBOOT_DIR ?= "${TPSDK_DIR}/u-boot"
@@ -55,7 +56,7 @@ TPSDK_XTOOLS_DIR ?= "${TPSDK_DIR}/x-tools"
 # directory exists if locally sourced. If it does, then we'll determine
 # the kernel and u-boot versions stright from makefiles.
 #
-python tplatforms_sdk_check_settings () {
+python tpsdk_check_settings () {
     tpsdksrc = d.getVar("TPSDK_SRC", True)
     tpsdkxtc = d.getVar("TPSDK_XTC", True)
 
@@ -67,11 +68,11 @@ python tplatforms_sdk_check_settings () {
     # Check T-platforms sources parameters and set corresponding override
     if tpsdksrc == "sdk":
         tpsdkdir = d.getVar("TPSDK_KERNEL_DIR", True)
-        ver = tplatforms_get_src_version(d, tpsdkdir, "Makefile")
+        ver = tpsdk_get_src_version(d, tpsdkdir, "Makefile")
         d.setVar("PREFERRED_VERSION_linux-baikal", ver + r"%")
 
         tpsdkdir = d.getVar("TPSDK_UBOOT_DIR", True)
-        ver = tplatforms_get_src_version(d, tpsdkdir, "Makefile")
+        ver = tpsdk_get_src_version(d, tpsdkdir, "Makefile")
         d.setVar("PREFERRED_VERSION_u-boot-baikal", ver)
 
         d.prependVar("DISTROOVERRIDES", "tpsdksrc:")
@@ -90,10 +91,10 @@ python tplatforms_sdk_check_settings () {
     else:
         bb.fatal("TPSDK_XTC value shall be one of {sdk,git}, but it is '%s'" % tpsdkxtc)
 }
-tplatforms_sdk_check_settings[eventmask] = "bb.event.ConfigParsed"
-addhandler tplatforms_sdk_check_settings
+tpsdk_check_settings[eventmask] = "bb.event.ConfigParsed"
+addhandler tpsdk_check_settings
 
-def tplatforms_get_src_version (d, srcpath, file):
+def tpsdk_get_src_version (d, srcpath, file):
     import re
 
     srcpath = os.path.join(srcpath, file)

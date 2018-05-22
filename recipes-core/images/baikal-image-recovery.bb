@@ -2,7 +2,8 @@ SUMMARY = "Baikal-T SPI-flash recovery image"
 DESCRIPTION = "Small image hidden in the Baikal-T SPI-flash memory device"
 LICENSE = "MIT"
 
-PV = "${TPLATFORMS_SDK_VERSION}"
+PV = "${TPSDK_VERSION}"
+PR = "r${TPSDK_REVISION}"
 
 # If kernel doesn't use devfs, the image.bbclass shall populate the /dev directory 
 USE_DEVFS = "${KERNEL_USES_DEVFS}"
