@@ -14,8 +14,6 @@ EXTERNAL_PROPAGATE_MODE = "1"
 # Discard/Append some toolchain features
 #
 # We can't use floating point 64 feature within the precompiled toolchain, since
-# its basic object haven't been compiled with one. Additionally we wanna have
-# the msa feature being enabled while using the tools built by yocto.
+# its basic object haven't been compiled with one.
 #
 TUNE_FEATURES_remove_tpsdkxtc = "fp64"
-TUNE_FEATURES_append_tpgitxtc = " msa"
