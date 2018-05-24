@@ -38,4 +38,4 @@ PACKAGE_INSTALL += "${RECOVERY_IMAGE_EXTRA_INSTALL} ${RECOVERY_IMAGE_TEST_BENCHE
 # NOTE They are very heavy!
 IMAGE_LINGUAS = "${RECOVERY_IMAGE_EXTRA_LINGUAS}"
 
-inherit core-image baikal-rom
+inherit core-image image-info baikal-rom

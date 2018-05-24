@@ -20,10 +20,6 @@ VIRTUAL-RUNTIME_syslog = "busybox-syslog"
 ###################################################################################################
 #                                   U-boot environment settings
 ###################################################################################################
-# Linux mtd-device to access the U-boot environment section used by
-# fw_printenv/fw_setenv U-boot utils
-UBOOT_ENV_MTD_FILE ?= "/dev/mtd1"
-
 # Default values of U-boot environment variables. They can be redefined
 # in the machine-specific conf-files if needed to be.
 UBOOT_ENV_SIZE ?= "${@'${RECOVERY_ROM_ENVIRONMENT}'.split(':')[1]}"
@@ -105,8 +101,9 @@ UBOOT_SIGN_ENABLE ?= "1"
 # Generic recovery image settings including root password, hostname and SPI-flash
 # layout: ~ 1Mb for U-boot, 65Kb (fixed by U-boot Baikal configs) for environment
 # and 15Mb for multiimage with kernel, initramfs and dtb's, which corresponds to:
-# BOOTLOADER  u-boot.bin  0x00000000-0x000F0000
-# ENVIRONMENT u-boot.env  0x000F0000-0x00100000
+# BOOTLOADER  u-boot.bin  0x00000000-0x000E0000
+# ENVIRONMENT u-boot.env  0x000E0000-0x000F0000
+# INFORMATION info.bin    0x000F0000-0x00100000
 # FITIMAGE    fitImage    0x00100000-0x01000000
 # All of these variables are mandatory to be defined, that's why they are declared
 # with default assign operator
@@ -114,16 +111,28 @@ UBOOT_SIGN_ENABLE ?= "1"
 # Base address of the SPI-flash device mapped to the Baikal MMIO to have the
 # firmware loaded stright from there
 RECOVERY_ROM_BASE        ?= "0x9C000000"
+RECOVERY_ROM_SIZE        ?= "16777216"
 # U-boot bootloader base address and size within SPI-flash memory. NOTE Bootloader
 # should always be the first blob in the image
-RECOVERY_ROM_BOOTLOADER  ?= "0x00000000:0x000F0000"
+RECOVERY_ROM_BOOTLOADER  ?= "0x00000000:0x000E0000"
 # U-boot environment image base address and size within SPI-flash memory. NOTE If
 # you wanna change the image size you also need to alter the u-boo/include/configs/baikal_mips.h
-RECOVERY_ROM_ENVIRONMENT ?= "0x000F0000:0x00010000"
+RECOVERY_ROM_ENVIRONMENT ?= "0x000E0000:0x00010000"
+# Recovery image informational section
+RECOVERY_ROM_INFORMATION ?= "0x000F0000:0x00010000"
 # Kernel/initramfs/dtb multi-image base address and size within SPI-flash memory
 RECOVERY_ROM_FITIMAGE    ?= "0x00100000:0x00F00000"
+# Info-section magic-number
+RECOVERY_INFO_MAGIC      ?= "0xDEADBEEFBAADF00DULL"
+# Kernel root-password and hostname
 RECOVERY_PWD_ROOT ?= "tplatforms"
 RECOVERY_HOSTNAME ?= "${MACHINE}"
+
+# Linux mtd-device to access the U-boot environment section used by
+# fw_printenv/fw_setenv U-boot utils
+RECOVERY_MTD_UBOOT_ENV ?= "/dev/mtd1"
+# Linux mtd-device to access the informational section of the image
+RECOVERY_MTD_INFO ?= "/dev/mtd2"
 
 # List of packages being installed along with basic recovery image busybox-utils. Most of
 # functionality is built-in to the busybox binary, but if you want anything special, you
@@ -132,7 +141,7 @@ RECOVERY_HOSTNAME ?= "${MACHINE}"
 # to not exceed the image size limitations, since they can pull in some heavy denendencies.
 # NOTE Drop mtd-utils package if you want to speed the build up, since it got heavy dependencies.
 # There is still some mtd functionality embedded into the busybox binary.
-RECOVERY_IMAGE_EXTRA_INSTALL ?= "dropbear ethtool mtd-utils u-boot-fw-utils hdparm parted e2fsprogs e2fsprogs-e2fsck e2fsprogs-mke2fs e2fsprogs-tune2fs e2fsprogs-badblocks e2fsprogs-resize2fs dosfstools pciutils setserial lrzsz i2c-tools spi-tools lmsensors-sensors sysfsutils recovery-image-info"
+RECOVERY_IMAGE_EXTRA_INSTALL ?= "dropbear ethtool mtd-utils u-boot-fw-utils hdparm parted e2fsprogs e2fsprogs-e2fsck e2fsprogs-mke2fs e2fsprogs-tune2fs e2fsprogs-badblocks e2fsprogs-resize2fs dosfstools pciutils setserial lrzsz i2c-tools spi-tools lmsensors-sensors sysfsutils xxd recovery-image-info"
 RECOVERY_IMAGE_TEST_BENCHES ?= "rt-tests whetstone dhrystone memtester tinymembench stressapptest libc-bench dbench tbench fio nbench-byte sysbench stress-ng"
 # Glibc locales can be also added to the image, like en-gb or ru-ru. But you should note,
 # that they are too heavy, ~2Mb each so I wouldn't do this.

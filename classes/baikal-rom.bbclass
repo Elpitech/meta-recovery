@@ -22,6 +22,7 @@
 # ${RECOVERY_ROM_BASE} - physical base address of the SPI-flash within the SoC address space
 # ${RECOVERY_ROM_BOOTLOADER} - bootloader section with base_address:size turple
 # ${RECOVERY_ROM_ENVIRONMENT} - bootloader environment section turple
+# ${RECOVERY_ROM_INFORMATION} - bootloader environment section turple
 # ${RECOVERY_ROM_FITIMAGE} - fitImage section turple
 
 RECOVERY_ROM_SIZE ?= "16777216"
@@ -30,13 +31,14 @@ RECOVERY_ROM_BOOTLOADER  ?= "0x00000000:0x000F0000"
 RECOVERY_ROM_ENVIRONMENT ?= "0x000F0000:0x00010000"
 RECOVERY_ROM_FITIMAGE    ?= "0x00100000:0x00F00000"
 
-ROM_DEPLOY_DIR = "${WORKDIR}/rom-image"
-ROM_BASE_NAME ??= "${MACHINE}-${DATETIME}"
-ROM_SYMLINK_NAME ??= "${MACHINE}"
+ROM_DEPLOY_DIR = "${WORKDIR}/image-rom"
+ROM_BASE_NAME ??= "${PN}-${MACHINE}-${DATETIME}"
+ROM_SYMLINK_NAME ??= "${PN}-${MACHINE}"
 ROM_BASE_NAME[vardepsexclude] += "DATETIME"
 
 ROM_BOOTLOADER_FILE = "${DEPLOY_DIR_IMAGE}/u-boot-${UBOOT_SYMLINK_NAME}.bin"
 ROM_ENVIRONMENT_FILE = "${DEPLOY_DIR_IMAGE}/${UBOOT_ENV_SYMLINK_NAME}.bin"
+ROM_INFORMATION_FILE = "${DEPLOY_DIR_IMAGE}/${IMAGE_INFO_SYMLINK_NAME}.bin"
 ROM_FITIMAGE_INITRD_FILE = "${DEPLOY_DIR_IMAGE}/fitImage-initramfs-${FIT_IMAGE_SYMLINK_NAME}.bin"
 ROM_FITIMAGE_KERNEL_FILE = "${DEPLOY_DIR_IMAGE}/fitImage-${FIT_IMAGE_SYMLINK_NAME}.bin"
 
@@ -76,7 +78,8 @@ baikal_image_mkrom () {
     outfile=${1}
 
     sections="BOOTLOADER:${RECOVERY_ROM_BOOTLOADER}:${ROM_BOOTLOADER_FILE};;\
-              ENVIRONMENT:${RECOVERY_ROM_ENVIRONMENT}:${ROM_ENVIRONMENT_FILE}"
+              ENVIRONMENT:${RECOVERY_ROM_ENVIRONMENT}:${ROM_ENVIRONMENT_FILE};;\
+              INFORMATION:${RECOVERY_ROM_INFORMATION}:${ROM_INFORMATION_FILE}"
 
     if [ -f "${ROM_FITIMAGE_INITRD_FILE}" ]; then
         sections="${sections};;FITIMAGE:${RECOVERY_ROM_FITIMAGE}:${ROM_FITIMAGE_INITRD_FILE}"
@@ -116,8 +119,8 @@ do_deploy_baikal_rom[depends] += "virtual/kernel:do_deploy \
                                   "
 
 do_deploy_baikal_rom() {
-    baikal_image_mkrom "${ROM_DEPLOY_DIR}/${PN}-${ROM_BASE_NAME}.rom"
-    ln -sf "${PN}-${ROM_BASE_NAME}.rom" "${ROM_DEPLOY_DIR}/${PN}-${ROM_SYMLINK_NAME}.rom"
+    baikal_image_mkrom "${ROM_DEPLOY_DIR}/${ROM_BASE_NAME}.rom"
+    ln -sf "${ROM_BASE_NAME}.rom" "${ROM_DEPLOY_DIR}/${ROM_SYMLINK_NAME}.rom"
 }
 do_deploy_baikal_rom[dirs] = "${ROM_DEPLOY_DIR}"
 do_deploy_baikal_rom[stamp-extra-info] = "${MACHINE}"
@@ -125,7 +128,7 @@ do_deploy_baikal_rom[vardepsexclude] += "DATETIME"
 SSTATETASKS += "do_deploy_baikal_rom"
 do_deploy_baikal_rom[sstate-inputdirs] = "${ROM_DEPLOY_DIR}"
 do_deploy_baikal_rom[sstate-outputdirs] = "${DEPLOY_DIR_IMAGE}"
-addtask do_deploy_baikal_rom after do_image_complete before do_build
+addtask do_deploy_baikal_rom after do_image_complete do_deploy_image_info before do_build
 
 python do_baikal_rom_setscene () {
     sstate_setscene(d)
