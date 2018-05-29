@@ -41,7 +41,15 @@ UBOOT_ENV_ETHADDR ?= "7a:72:6c:4a:7a:ee"
 UBOOT_ENV_ETH1ADDR ?= "7a:72:6c:4a:7b:ee"
 UBOOT_ENV_ETH2ADDR ?= "7a:72:6c:4a:7c:ee"
 
-# U-boot menu/autoboot configuration. It will be translated to the system
+# U-boot MTD configurations. They will be translated to the mtdparts/mtdids
+# environment variables and passed to kernel if one supports it
+UBOOT_ENV_MTDID ?= "boot_flash"
+UBOOT_ENV_MTDPARTS ?= "bootloader;${@'${RECOVERY_ROM_BOOTLOADER}'.replace(':',';')};ro;; \
+			environment;${@'${RECOVERY_ROM_ENVIRONMENT}'.replace(':',';')};; \
+			information;${@'${RECOVERY_ROM_INFORMATION}'.replace(':',';')};ro;; \
+			fitimage;${@'${RECOVERY_ROM_FITIMAGE}'.replace(':',';')}"
+
+# U-boot menu/autoboot configuration. They will be translated to the system
 # boot sequense in compliance with the specified kernel and rootfs sources
 UBOOT_ENV_BOOTCMD ?= "bootmenu"
 UBOOT_ENV_BOOTDELAY ?= "10"
@@ -115,14 +123,16 @@ RECOVERY_ROM_SIZE        ?= "16777216"
 # U-boot bootloader base address and size within SPI-flash memory. NOTE Bootloader
 # should always be the first blob in the image
 RECOVERY_ROM_BOOTLOADER  ?= "0x00000000:0x000E0000"
-# U-boot environment image base address and size within SPI-flash memory. NOTE If
-# you wanna change the image size you also need to alter the u-boo/include/configs/baikal_mips.h
+# U-boot environment image base address and size within SPI-flash memory.
+# NOTE If you wanna change the image size you also need to alter the file:
+# u-boot/include/configs/baikal_<MATCHINE>.h
 RECOVERY_ROM_ENVIRONMENT ?= "0x000E0000:0x00010000"
 # Recovery image informational section
 RECOVERY_ROM_INFORMATION ?= "0x000F0000:0x00010000"
 # Kernel/initramfs/dtb multi-image base address and size within SPI-flash memory
 RECOVERY_ROM_FITIMAGE    ?= "0x00100000:0x00F00000"
-# Info-section magic-number
+# Info-section magic-number. It will be set to recovery-image-info reader app
+# so the image info and the app would be synchronized about the number.
 RECOVERY_INFO_MAGIC      ?= "0xDEADBEEFBAADF00DULL"
 # Kernel root-password and hostname
 RECOVERY_PWD_ROOT ?= "tplatforms"
