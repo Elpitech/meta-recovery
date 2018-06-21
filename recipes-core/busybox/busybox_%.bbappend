@@ -25,6 +25,8 @@ SRC_URI += "file://archives.cfg \
             file://setserial.cfg \
             file://usbutils.cfg \
             file://watchdog.cfg \
+            file://fancy.cfg \
+            file://env.cfg \
             file://shadow"
 
 DEPENDS += "openssl-native"
