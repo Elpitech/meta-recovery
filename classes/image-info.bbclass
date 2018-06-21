@@ -58,6 +58,10 @@ IMAGE_INFO_INFORMATION_SIZE ?= "${@'${RECOVERY_ROM_INFORMATION}'.split(':')[1]}"
 IMAGE_INFO_FITIMAGE_BASE ?= "${@'${RECOVERY_ROM_FITIMAGE}'.split(':')[0]}"
 IMAGE_INFO_FITIMAGE_SIZE ?= "${@'${RECOVERY_ROM_FITIMAGE}'.split(':')[1]}"
 IMAGE_INFO_FITIMAGE_SIGNED ?= "${UBOOT_SIGN_ENABLE}"
+IMAGE_INFO_VMLINUZ_LDADDR ?= "${UBOOT_VMLINUZ_LOADADDRESS}"
+IMAGE_INFO_VMLINUX_LDADDR ?= "${UBOOT_VMLINUX_LOADADDRESS}"
+IMAGE_INFO_FDT_LDADDR ?= "${UBOOT_FDT_LOADADDRESS}"
+IMAGE_INFO_RD_LDADDR ?= "${UBOOT_RD_LOADADDRESS}"
 IMAGE_INFO_SYSTEM_UTILS ?= "base - ${VIRTUAL-RUNTIME_base-utils}, init - ${VIRTUAL-RUNTIME_init_manager}/${VIRTUAL-RUNTIME_initscripts}, login - ${VIRTUAL-RUNTIME_login_manager}, dev-manager - ${VIRTUAL-RUNTIME_dev_manager}, syslog - ${VIRTUAL-RUNTIME_syslog}"
 IMAGE_INFO_EXTRA_UTILS ?= "${RECOVERY_IMAGE_EXTRA_INSTALL}"
 IMAGE_INFO_TEST_BENCHES ?= "${RECOVERY_IMAGE_TEST_BENCHES}"
@@ -130,6 +134,10 @@ image_info_cook () {
               int;4;${IMAGE_INFO_FITIMAGE_BASE};;\
               int;4;${IMAGE_INFO_FITIMAGE_SIZE};;\
               int;1;${IMAGE_INFO_FITIMAGE_SIGNED};;\
+              int;4;${IMAGE_INFO_VMLINUZ_LDADDR};;\
+              int;4;${IMAGE_INFO_VMLINUX_LDADDR};;\
+              int;4;${IMAGE_INFO_FDT_LDADDR};;\
+              int;4;${IMAGE_INFO_RD_LDADDR};;\
               str;$llistlen;${IMAGE_INFO_SYSTEM_UTILS};;\
               str;$llistlen;${IMAGE_INFO_EXTRA_UTILS};;\
               str;$llistlen;${IMAGE_INFO_TEST_BENCHES};;\

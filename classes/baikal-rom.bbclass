@@ -22,13 +22,14 @@
 # ${RECOVERY_ROM_BASE} - physical base address of the SPI-flash within the SoC address space
 # ${RECOVERY_ROM_BOOTLOADER} - bootloader section with base_address:size turple
 # ${RECOVERY_ROM_ENVIRONMENT} - bootloader environment section turple
-# ${RECOVERY_ROM_INFORMATION} - bootloader environment section turple
+# ${RECOVERY_ROM_INFORMATION} - ROM-image informational section turple
 # ${RECOVERY_ROM_FITIMAGE} - fitImage section turple
 
-RECOVERY_ROM_SIZE ?= "16777216"
 RECOVERY_ROM_BASE ?= "0x9C000000"
-RECOVERY_ROM_BOOTLOADER  ?= "0x00000000:0x000F0000"
-RECOVERY_ROM_ENVIRONMENT ?= "0x000F0000:0x00010000"
+RECOVERY_ROM_SIZE ?= "16777216"
+RECOVERY_ROM_BOOTLOADER  ?= "0x00000000:0x000E0000"
+RECOVERY_ROM_ENVIRONMENT ?= "0x000E0000:0x00010000"
+RECOVERY_ROM_INFORMATION ?= "0x000F0000:0x00010000"
 RECOVERY_ROM_FITIMAGE    ?= "0x00100000:0x00F00000"
 
 ROM_DEPLOY_DIR = "${WORKDIR}/image-rom"

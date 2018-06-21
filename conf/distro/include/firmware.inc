@@ -30,13 +30,17 @@ UBOOT_ENV_BAUDRATE ?= "${@'${SERIAL_CONSOLE}'.split(';')[0]}"
 UBOOT_ENV_NUM_CORES ?= "2"
 UBOOT_ENV_CPUFREQ ?= "900"
 UBOOT_ENV_HOSTNAME ?= "${RECOVERY_HOSTNAME}"
-UBOOT_ENV_KERNEL_FILE_NAME ?= "vmlinux.gz"
-UBOOT_ENV_INITRD_FILE_NAME ?= "initramfs.gz"
-UBOOT_ENV_FDT_FILE_NAME ?= "machine.dtb"
-UBOOT_ENV_KERNEL_ADDR_LD ?= "${UBOOT_LOADADDRESS}"
-UBOOT_ENV_INITRD_ADDR_LD ?= "0x86100000"
-UBOOT_ENV_FDT_ADDR_LD ?= "0x86000000"
+UBOOT_ENV_VMLINUZ_FILE_NAME ?= "vmlinuz${@'-${KERNEL_IMAGE_SYMLINK_NAME}' if '${KERNEL_IMAGE_SYMLINK_NAME}' else ''}.bin"
+UBOOT_ENV_VMLINUX_FILE_NAME ?= "vmlinux${@'-${KERNEL_IMAGE_SYMLINK_NAME}' if '${KERNEL_IMAGE_SYMLINK_NAME}' else ''}.bin"
+UBOOT_ENV_FDT_FILE_NAME ?= "${@os.path.basename('${KERNEL_DEVICETREE}'.split()[0])}"
+UBOOT_ENV_INITRD_FILE_NAME ?= "baikal-image-recovery-${MACHINE}.cpio.gz"
+UBOOT_ENV_VMLINUZ_ADDR_LD ?= "${UBOOT_VMLINUZ_LOADADDRESS}"
+UBOOT_ENV_VMLINUX_ADDR_LD ?= "${UBOOT_VMLINUX_LOADADDRESS}"
+UBOOT_ENV_FDT_ADDR_LD ?= "${UBOOT_FDT_LOADADDRESS}"
+UBOOT_ENV_INITRD_ADDR_LD ?= "${UBOOT_RD_LOADADDRESS}"
 UBOOT_ENV_FITIMAGE_ADDR_FW ?= "${@format(int('${RECOVERY_ROM_BASE}', 16) + int('${RECOVERY_ROM_FITIMAGE}'.split(':')[0], 16), '#010x')}"
+UBOOT_ENV_FITIMAGE_CONFIG ?= "${@'${KERNEL_DEVICETREE}'.split()[0]}"
+UBOOT_ENV_FITIMAGE_VERIFY ?= "y"
 UBOOT_ENV_ETHADDR ?= "7a:72:6c:4a:7a:ee"
 UBOOT_ENV_ETH1ADDR ?= "7a:72:6c:4a:7b:ee"
 UBOOT_ENV_ETH2ADDR ?= "7a:72:6c:4a:7c:ee"
@@ -45,9 +49,10 @@ UBOOT_ENV_ETH2ADDR ?= "7a:72:6c:4a:7c:ee"
 # environment variables and passed to kernel if one supports it
 UBOOT_ENV_MTDID ?= "boot_flash"
 UBOOT_ENV_MTDPARTS ?= "bootloader;${@'${RECOVERY_ROM_BOOTLOADER}'.replace(':',';')};ro;; \
-			environment;${@'${RECOVERY_ROM_ENVIRONMENT}'.replace(':',';')};; \
-			information;${@'${RECOVERY_ROM_INFORMATION}'.replace(':',';')};ro;; \
-			fitimage;${@'${RECOVERY_ROM_FITIMAGE}'.replace(':',';')}"
+                       environment;${@'${RECOVERY_ROM_ENVIRONMENT}'.replace(':',';')};; \
+                       information;${@'${RECOVERY_ROM_INFORMATION}'.replace(':',';')};ro;; \
+                       fitimage;${@'${RECOVERY_ROM_FITIMAGE}'.replace(':',';')};ro;; \
+                       firmware;0x0;${RECOVERY_ROM_SIZE}"
 
 # U-boot menu/autoboot configuration. They will be translated to the system
 # boot sequense in compliance with the specified kernel and rootfs sources
@@ -64,7 +69,7 @@ UBOOT_ENV_BOOTMENU ?= "\
 	net_stat=8.  Boot kernel via TFTP (192.168.0.1) to initrd;tftp=/dev/ram;ip=192.168.0.2;srvip=192.168.0.1;gwip=192.168.0.1;; \
 	net_dhcp=9.  Boot kernel via TFTP (dhcp) to initrd;tftp=/dev/ram;ip=dhcp;; \
 	net_nfs=10. Boot kernel via NFS (dhcp) to initrd;nfs=/dev/ram;ip=dhcp;dir=/boot;; \
-	reset=Reset board;reset\
+	reset=Reset board;reset \
 "
 
 ###################################################################################################
@@ -74,10 +79,12 @@ UBOOT_ENV_BOOTMENU ?= "\
 # ones, which will also be copied to the deploy directory, for instance "vmlinux vmlinux.gz vmlinuz".
 # We also don't need to bundle device-trees in the kernel, since it is going to be added to the
 # fitImage. Initramfs shall rely on devtmps. It can't consume more than 16MB.
-KERNEL_EXTRA_IMAGETYPES ?= ""
+# FIT-image will be signed up by default.
+KERNEL_EXTRA_IMAGETYPES ?= "vmlinux vmlinuz.bin vmlinux.bin"
 KERNEL_DEVICETREE_BUNDLE ?= "0"
 KERNEL_IMAGE_MAXSIZE ?= "16384"
 KERNEL_USES_DEVFS ?= "1"
+UBOOT_SIGN_ENABLE ?= "1"
 
 # Initramfs is used either as recovery rootfs image or to preload some kernel modules before
 # the actual kernel is booted. Recovery initial ramdisk is based on the busybox with
@@ -88,20 +95,6 @@ KERNEL_USES_DEVFS ?= "1"
 INITRAMFS_EXTRA_FSTYPES ?= ""
 INITRAMFS_IMAGE_BUNDLE ?= "0"
 INITRAMFS_MAXSIZE ?= "32768"
-
-# fitImage is described by specific dts-file automatically created by kernel-fitimage.bbclass
-# class. In order to have the kernel successfully booted, we need to provide the kernel blob
-# load address, entry point and some more information.
-# NOTE 1. UBOOT_ENTRYPOINT will be redefined in accordance with the UBOOT_ENTRYSYMBOL address
-# NOTE 2. I don't know what initrd entrypoint is for, so either comment it out or just set it to
-# zero. Obviously initrd loadaddress is the fixed address to load the ramdisk.
-# We also don't want to sign the fitImage by default.
-UBOOT_LOADADDRESS ?= "0x80100000"
-UBOOT_ENTRYPOINT ?= "0x808f3510"
-UBOOT_ENTRYSYMBOL ?= "kernel_entry"
-UBOOT_RD_LOADADDRESS ?= "00000000"
-UBOOT_RD_ENTRYPOINT ?= "00000000"
-UBOOT_SIGN_ENABLE ?= "1"
 
 ###################################################################################################
 #                                     Recovery image settings
