@@ -4,8 +4,9 @@
 # SDK version is statically set here so to have at least some value used
 # by SDK-specific meta code.
 #
-TPSDK_VERSION ?= "2.0"
+TPSDK_VERSION ?= "1.0"
 TPSDK_REVISION ?= "0"
+TPSDK_RCCYCLE ?= "0"
 
 #
 # Yocto SDK settings
@@ -40,7 +41,7 @@ TOOLCHAIN_TARGET_TASK_append = " kernel-devsrc"
 # purpose they'd better to be fetched from corresponding repositories.
 #
 TPSDK_SYS ?= "mipsel-unknown-linux-gnu"
-TPSDK_DIR ?= "/media/windows/WORKSPACE/IT/T-platforms/SFBT1/src/sdk"
+TPSDK_DIR ?= "/media/windows/WORKSPACE/IT/T-platforms/SDK/src/root"
 TPSDK_SRC ?= "sdk"
 TPSDK_XTC ?= "sdk"
 TPSDK_KEYS_NAME ?= "baikal"
