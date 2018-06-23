@@ -31,7 +31,7 @@ PACKAGE_INSTALL  = "initramfs-framework-base initramfs-module-mdev initramfs-mod
 PACKAGE_INSTALL += "initramfs-module-initfs"
 PACKAGE_INSTALL += "${VIRTUAL-RUNTIME_init_manager} ${VIRTUAL-RUNTIME_login_manager} ${VIRTUAL-RUNTIME_initscripts} ${VIRTUAL-RUNTIME_dev_manager}"
 PACKAGE_INSTALL += "${VIRTUAL-RUNTIME_base-utils} ${VIRTUAL-RUNTIME_syslog} ${VIRTUAL-RUNTIME_base-utils-hwclock}"
-PACKAGE_INSTALL += "base-files tzdata modutils-initscripts"
+PACKAGE_INSTALL += "base-files tzdata"
 PACKAGE_INSTALL += "netbase"
 PACKAGE_INSTALL += "${RECOVERY_IMAGE_EXTRA_INSTALL} ${RECOVERY_IMAGE_TEST_BENCHES} ${ROOTFS_BOOTSTRAP_INSTALL}"
 
