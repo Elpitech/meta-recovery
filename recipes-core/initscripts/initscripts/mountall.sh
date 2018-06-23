@@ -12,6 +12,11 @@
 . /etc/default/rcS
 
 #
+# Create shared-memory directory. It might be useful for fstab entries
+#
+[ -e /dev/shm ] || mkdir -m 1777 /dev/shm
+
+#
 # Mount local filesystems in /etc/fstab. For some reason, people
 # might want to mount "proc" several times, and mount -v complains
 # about this. So we mount "proc" filesystems without -v.
