@@ -28,9 +28,10 @@ RECOVERY_IMAGE_EXTRA_LINGUAS ??= ""
 # configurations. Some extra packages can still be added within the firmware configuration
 # header.
 PACKAGE_INSTALL  = "initramfs-framework-base initramfs-module-mdev initramfs-module-e2fs initramfs-module-rootfs initramfs-module-debug"
+PACKAGE_INSTALL += "initramfs-module-initfs"
 PACKAGE_INSTALL += "${VIRTUAL-RUNTIME_init_manager} ${VIRTUAL-RUNTIME_login_manager} ${VIRTUAL-RUNTIME_initscripts} ${VIRTUAL-RUNTIME_dev_manager}"
 PACKAGE_INSTALL += "${VIRTUAL-RUNTIME_base-utils} ${VIRTUAL-RUNTIME_syslog} ${VIRTUAL-RUNTIME_base-utils-hwclock}"
-PACKAGE_INSTALL += "base-files base-passwd modutils-initscripts"
+PACKAGE_INSTALL += "base-files modutils-initscripts"
 PACKAGE_INSTALL += "netbase"
 PACKAGE_INSTALL += "${RECOVERY_IMAGE_EXTRA_INSTALL} ${RECOVERY_IMAGE_TEST_BENCHES} ${ROOTFS_BOOTSTRAP_INSTALL}"
 

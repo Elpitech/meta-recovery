@@ -25,8 +25,8 @@ VIRTUAL-RUNTIME_syslog = "busybox-syslog"
 UBOOT_ENV_SIZE ?= "${@'${RECOVERY_ROM_ENVIRONMENT}'.split(':')[1]}"
 UBOOT_ENV_BUILD_IMAGE ?= "T-platforms ${MACHINE} (${DISTRO} ${DISTRO_VERSION}) boot ROM image"
 UBOOT_ENV_BUILD_VERSION ?= "${TPSDK_VERSION}"
-UBOOT_ENV_CONSOLE ?= "${@'${SERIAL_CONSOLE}'.split(';')[1]}"
-UBOOT_ENV_BAUDRATE ?= "${@'${SERIAL_CONSOLE}'.split(';')[0]}"
+UBOOT_ENV_CONSOLE ?= "${@'${SERIAL_CONSOLE}'.split()[1]}"
+UBOOT_ENV_BAUDRATE ?= "${@'${SERIAL_CONSOLE}'.split()[0]}"
 UBOOT_ENV_NUM_CORES ?= "2"
 UBOOT_ENV_CPUFREQ ?= "900"
 UBOOT_ENV_HOSTNAME ?= "${RECOVERY_HOSTNAME}"
@@ -59,16 +59,16 @@ UBOOT_ENV_MTDPARTS ?= "bootloader;${@'${RECOVERY_ROM_BOOTLOADER}'.replace(':',';
 UBOOT_ENV_BOOTCMD ?= "bootmenu"
 UBOOT_ENV_BOOTDELAY ?= "10"
 UBOOT_ENV_BOOTMENU ?= "\
-	rec_ram=1.  Boot recovery kernel and RFS;rom=/dev/ram;; \
+	rec_ram=1.  Boot recovery kernel and RFS;rom=initfs;; \
 	rec_sda1=2.  Boot recovery kernel to /dev/sda1;rom=/dev/sda1;; \
 	rec_sdb1=3.  Boot recovery kernel to /dev/sdb1;rom=/dev/sdb1;; \
-	sata_ram=4.  Boot kernel from SATA ext 0:1 to initrd;sata=/dev/ram;fs=ext;part=0:1;dir=/boot;; \
+	sata_ram=4.  Boot kernel from SATA ext 0:1 to initrd;sata=initfs;fs=ext;part=0:1;dir=/boot;; \
 	sata_sda1=5.  Boot kernel from SATA ext 0:1 to /dev/sda1;sata=/dev/sda1;fs=ext;part=0:1;dir=/boot;; \
-	usb_ram=6.  Boot kernel from USB fat 0:1 to initrd;usb=/dev/ram;fs=fat;part=0:1;dir=/boot;; \
+	usb_ram=6.  Boot kernel from USB fat 0:1 to initrd;usb=initfs;fs=fat;part=0:1;dir=/boot;; \
 	usb_sdb1=7.  Boot kernel from USB fat 0:1 to /dev/sdb1;usb=/dev/sdb1;fs=fat;part=0:1;dir=/boot;; \
-	net_stat=8.  Boot kernel via TFTP (192.168.0.1) to initrd;tftp=/dev/ram;ip=192.168.0.2;srvip=192.168.0.1;gwip=192.168.0.1;; \
-	net_dhcp=9.  Boot kernel via TFTP (dhcp) to initrd;tftp=/dev/ram;ip=dhcp;; \
-	net_nfs=10. Boot kernel via NFS (dhcp) to initrd;nfs=/dev/ram;ip=dhcp;dir=/boot;; \
+	net_stat=8.  Boot kernel via TFTP (192.168.0.1) to initrd;tftp=initfs;ip=192.168.0.2;srvip=192.168.0.1;gwip=192.168.0.1;; \
+	net_dhcp=9.  Boot kernel via TFTP (dhcp) to initrd;tftp=initfs;ip=dhcp;; \
+	net_nfs=10. Boot kernel via NFS (dhcp) to initrd;nfs=initfs;ip=dhcp;dir=/boot;; \
 	reset=Reset board;reset \
 "
 

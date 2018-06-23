@@ -1,0 +1,29 @@
+#!/bin/sh
+# Copyright (C) 2018 T-platforms JSC.
+# Licensed on GPL-v2
+
+initfs_enabled() {
+	return 0
+}
+
+initfs_run() {
+	if [ "$bootparam_root" != "initfs" ]; then
+		return
+	fi
+
+	if [ -f "/sbin/init" ]; then
+
+		sleep 2
+
+		msg ""
+		msg "Starting system init at initramfs."
+
+		rm -rf $ROOTFS_DIR $MODULES_DIR /init
+
+		sleep 1
+
+		exec /sbin/init
+	else
+		fatal "System init file doesn't exist"
+	fi
+}
