@@ -6,6 +6,8 @@ SRC_URI += "file://generic.cfg \
             file://login.cfg \
             file://archives.cfg \
             file://blockdev.cfg \
+            file://killall5.cfg \
+            file://iostat.cfg \
             file://cksum.cfg \
             file://console.cfg \
             file://dosfstools.cfg \
@@ -39,7 +41,8 @@ SRC_URI += "file://generic.cfg \
             file://kbd_mode.cfg \
             file://pipe_progress.cfg"
 
-SRC_URI += "file://group \
+SRC_URI += "file://rcK \
+            file://group \
             file://passwd \
             file://shadow \
             file://fstab"
@@ -65,6 +68,7 @@ do_install_append() {
     # Discard auto-mount lines from inittab and install new fstab
     if grep "CONFIG_INIT=y" ${B}/.config && grep "CONFIG_FEATURE_USE_INITTAB=y" ${B}/.config; then
         sed -i -e "4,10s/.*/# &/" ${D}${sysconfdir}/inittab
+        sed -i -e "17,18s/.*/# &/" ${D}${sysconfdir}/inittab
     fi
     install -m 0644 ${WORKDIR}/fstab ${D}${sysconfdir}
 
