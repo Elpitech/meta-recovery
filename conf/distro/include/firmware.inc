@@ -137,6 +137,9 @@ RECOVERY_MTD_UBOOT_ENV ?= "/dev/mtd1"
 # Linux mtd-device to access the informational section of the image
 RECOVERY_MTD_INFO ?= "/dev/mtd2"
 
+# Default timezone settings
+DEFAULT_TIMEZONE ?= "Europe/Moscow"
+
 # List of packages being installed along with basic recovery image busybox-utils. Most of
 # functionality is built-in to the busybox binary, but if you want anything special, you
 # can add the yocto package-name to this list. For instance, you may want to add the packages
