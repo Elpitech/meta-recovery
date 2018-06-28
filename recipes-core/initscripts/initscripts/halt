@@ -25,6 +25,7 @@ then
 fi
 
 # halt SED_HALTARGS -p $hddown
-halt SED_HALTARGS
+# halt SED_HALTARGS
+echo "Proceed with busybox halt/reboot/poweroff actions"
 
 : exit 0

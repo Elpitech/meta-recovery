@@ -4,6 +4,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += "file://rcS-default \
             file://mountall.sh \
             file://halt \
+            file://reboot \
             file://urandom \
             file://bootmisc.sh \
             file://populate-volatile.sh"
