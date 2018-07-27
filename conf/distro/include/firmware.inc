@@ -3,6 +3,7 @@
 ###################################################################################################
 # Next values of the default kernel/u-boot version will be used only if the meta isn't used within
 # SDK, but if it is, then the version shall be determined right from the sources.
+KERNEL_REALTIME ?= ""
 PREFERRED_VERSION_linux-baikal ?= "4.4%"
 PREFERRED_VERSION_u-boot-baikal ?= "2014.10"
 # Enable busybox as the main services provider for the recovery image. It shall consume less memory
@@ -147,7 +148,7 @@ DEFAULT_TIMEZONE ?= "Europe/Moscow"
 # to not exceed the image size limitations, since they can pull in some heavy denendencies.
 # NOTE Drop mtd-utils package if you want to speed the build up, since it got heavy dependencies.
 # There is still some mtd functionality embedded into the busybox binary.
-RECOVERY_IMAGE_EXTRA_INSTALL ?= "dropbear ethtool mtd-utils u-boot-fw-utils hdparm parted e2fsprogs e2fsprogs-e2fsck e2fsprogs-mke2fs e2fsprogs-tune2fs e2fsprogs-badblocks e2fsprogs-resize2fs dosfstools pciutils setserial lrzsz i2c-tools spi-tools lmsensors-sensors sysfsutils xxd recovery-image-info"
+RECOVERY_IMAGE_EXTRA_INSTALL ?= "dropbear ethtool mtd-utils u-boot-fw-utils hdparm parted e2fsprogs e2fsprogs-e2fsck e2fsprogs-mke2fs e2fsprogs-tune2fs e2fsprogs-badblocks e2fsprogs-resize2fs dosfstools squashfs-tools pciutils setserial lrzsz i2c-tools spi-tools lmsensors-sensors sysfsutils xxd recovery-image-info"
 RECOVERY_IMAGE_TEST_BENCHES ?= "rt-tests whetstone dhrystone memtester tinymembench stressapptest libc-bench dbench tbench fio nbench-byte sysbench stress-ng"
 # Glibc locales can be also added to the image, like en-gb or ru-ru. But you should note,
 # that they are too heavy, ~2Mb each so I wouldn't do this.
