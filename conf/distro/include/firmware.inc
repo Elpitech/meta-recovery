@@ -57,21 +57,25 @@ UBOOT_ENV_MTDPARTS ?= "bootloader;${@'${RECOVERY_ROM_BOOTLOADER}'.replace(':',';
 
 # U-boot menu/autoboot configuration. They will be translated to the system
 # boot sequense in compliance with the specified kernel and rootfs sources
-UBOOT_ENV_BOOTCMD ?= "bootmenu"
+UBOOT_ENV_BOOTCMD ?= "run boot_rec_ram"
 UBOOT_ENV_BOOTDELAY ?= "10"
-UBOOT_ENV_BOOTMENU ?= "\
-	rec_ram=1.  Boot recovery kernel and RFS;rom=initfs;; \
-	rec_sda1=2.  Boot recovery kernel to /dev/sda1;rom=/dev/sda1;; \
-	rec_sdb1=3.  Boot recovery kernel to /dev/sdb1;rom=/dev/sdb1;; \
-	sata_ram=4.  Boot kernel from SATA ext 0:1 to initrd;sata=initfs;fs=ext;part=0:1;dir=/boot;; \
-	sata_sda1=5.  Boot kernel from SATA ext 0:1 to /dev/sda1;sata=/dev/sda1;fs=ext;part=0:1;dir=/boot;; \
-	usb_ram=6.  Boot kernel from USB fat 0:1 to initrd;usb=initfs;fs=fat;part=0:1;dir=/boot;; \
-	usb_sdb1=7.  Boot kernel from USB fat 0:1 to /dev/sdb1;usb=/dev/sdb1;fs=fat;part=0:1;dir=/boot;; \
-	net_stat=8.  Boot kernel via TFTP (192.168.0.1) to initrd;tftp=initfs;ip=192.168.0.2;srvip=192.168.0.1;gwip=192.168.0.1;; \
-	net_dhcp=9.  Boot kernel via TFTP (dhcp) to initrd;tftp=initfs;ip=dhcp;; \
-	net_nfs=10. Boot kernel via NFS (dhcp) to initrd;nfs=initfs;ip=dhcp;dir=/boot;; \
+UBOOT_ENV_BOOTUNITS ?= "\
+	rec_ram=1.  Boot from flash to initrd;rom=initfs;; \
+	rec_sda1=2.  Boot from flash to /dev/sda1 FS;rom=/dev/sda1;; \
+	rec_sdb1=3.  Boot from flash to /dev/sdb1 FS;rom=/dev/sdb1;; \
+	usb_ram=4.  Boot from USB fat 0:1 to initrd;usb=initfs;fs=fat;part=0:1;dir=/;; \
+	usb_sda1=5.  Boot from USB ext 0:1 to /dev/sda1 FS;usb=/dev/sda1;fs=ext;part=0:1;dir=/boot;; \
+	usb_sdb1=6.  Boot from USB ext 0:1 to /dev/sdb1 FS;usb=/dev/sdb1;fs=ext;part=0:1;dir=/boot;; \
+	sata_ram=7.  Boot from SATA fat 0:1 to initrd;usb=initfs;fs=fat;part=0:1;dir=/;; \
+	sata_sda1=8.  Boot from SATA ext 0:1 to /dev/sda1 FS;sata=/dev/sda1;fs=ext;part=0:1;dir=/boot;; \
+	sata_sdb1=9.  Boot from SATA ext 0:1 to /dev/sdb1 FS;sata=/dev/sdb1;fs=ext;part=0:1;dir=/boot;; \
+	net_stat=10. Boot via TFTP (192.168.0.2/192.168.0.1) to initrd;tftp=initfs;ip=192.168.0.2;srvip=192.168.0.1;; \
+	net_dhcp=11. Boot via TFTP (dhcp/192.168.0.1) to initrd;tftp=initfs;ip=dhcp;srvip=192.168.0.1;; \
+	net_nfs=12. Boot via NFS (dhcp/192.168.0.1) to initrd;nfs=initfs;ip=dhcp;srvip=192.168.0.1;dir=/boot;; \
 	reset=Reset board;reset \
 "
+UBOOT_ENV_MENU_MAIN ?= "rec_ram;;rec_sda1;;rec_sdb1;;rec_sdb1;;usb_sda1;;usb_sdb1;; \
+			sata_ram;;sata_sda1;;sata_sdb1;;net_stat;;net_dhcp;;net_nfs;;reset"
 
 ###################################################################################################
 #                                Kernel (FIT)image build settings
