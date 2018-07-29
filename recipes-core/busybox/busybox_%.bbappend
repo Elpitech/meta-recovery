@@ -42,6 +42,7 @@ SRC_URI += "file://generic.cfg \
             file://pipe_progress.cfg"
 
 SRC_URI += "file://rcK \
+            file://mdev-mount.sh \
             file://group \
             file://passwd \
             file://shadow \
