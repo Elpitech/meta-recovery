@@ -37,6 +37,7 @@
 #MACHINE ?= "cnc-msbt2"
 #MACHINE ?= "axt1-sfbt1"
 #MACHINE ?= "axt1-msbt2"
+#MACHINE ?= "bc3bt1-mrbt1"
 #MACHINE ?= "bfk"
 #MACHINE ?= "bfkx"
 #MACHINE ?= "bfk3"
