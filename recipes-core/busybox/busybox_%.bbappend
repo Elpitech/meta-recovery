@@ -43,6 +43,7 @@ SRC_URI += "file://generic.cfg \
 
 SRC_URI += "file://rcK \
             file://mdev-mount.sh \
+            file://hwclock.sh \
             file://group \
             file://passwd \
             file://shadow \
