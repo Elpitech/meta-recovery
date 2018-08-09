@@ -1,7 +1,8 @@
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:${THISDIR}/files:"
 
-SRC_URI += "file://generic.cfg \
+SRC_URI += "file://BusyBox-stty-Add-RS485-config-options.patch \
+            file://generic.cfg \
             file://einit.cfg \
             file://login.cfg \
             file://archives.cfg \
