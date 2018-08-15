@@ -43,7 +43,7 @@ case "$1" in
 
                 if [ "$VERBOSE" != no ]
                 then
-                        echo "System clocks set. Local time is now `date`."
+                        echo "System clocks set. Local time is `date` now."
                 fi
                 ;;
         stop|restart|reload|force-reload)

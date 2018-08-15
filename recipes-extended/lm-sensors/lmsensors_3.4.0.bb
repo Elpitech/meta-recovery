@@ -21,6 +21,8 @@ EXTRA_OEMAKE = 'LINUX=${STAGING_KERNEL_DIR} EXLDFLAGS="${LDFLAGS}" \
 		MACHINE=${TARGET_ARCH} PREFIX=${prefix} CC="${CC}" \
 		AR="${AR}" MANDIR=${mandir}'
 
+INSANE_SKIP_${PN} += "installed-vs-shipped"
+
 do_compile() {
 	oe_runmake user PROG_EXTRA=sensors
 }

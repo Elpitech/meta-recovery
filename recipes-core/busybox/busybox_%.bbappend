@@ -1,7 +1,7 @@
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:${THISDIR}/files:"
 
-SRC_URI += "file://BusyBox-stty-Add-RS485-config-options.patch \
+SRC_URI += "file://BusyBox-stty-Add-RS485-config-options-${PV}.patch \
             file://generic.cfg \
             file://einit.cfg \
             file://login.cfg \
@@ -70,8 +70,10 @@ do_install_append() {
 
     # Discard auto-mount lines from inittab and install new fstab
     if grep "CONFIG_INIT=y" ${B}/.config && grep "CONFIG_FEATURE_USE_INITTAB=y" ${B}/.config; then
-        sed -i -e "4,10s/.*/# &/" ${D}${sysconfdir}/inittab
-        sed -i -e "17,18s/.*/# &/" ${D}${sysconfdir}/inittab
+        if [ -f ${D}${sysconfdir}/inittab ]; then
+            sed -i -e "4,10s/.*/# &/" ${D}${sysconfdir}/inittab
+            sed -i -e "17,18s/.*/# &/" ${D}${sysconfdir}/inittab
+        fi
     fi
     install -m 0644 ${WORKDIR}/fstab ${D}${sysconfdir}
 

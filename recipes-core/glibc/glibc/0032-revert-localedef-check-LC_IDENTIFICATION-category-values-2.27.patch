@@ -1,0 +1,72 @@
+Revert: localedef: check LC_IDENTIFICATION.category values
+
+Currently localedef accepts any value for the category keyword.  This has
+allowed bad values to propagate to the vast majority of locales (~90%).
+Add some logic to only accept a few standards.
+
+From b5889d25e9bf944a89fdd7bcabf3b6c6f6bb6f7c Mon Sep 17 00:00:00 2001
+From: Serge Semin <fancer.lancer@gmail.com>
+Date: Mon, 21 Aug 2017 13:03:29 +0200
+Subject: [PATCH] locale: Don't fail if id standard is unsupported
+
+---
+ locale/programs/ld-identification.c | 19 ++++++++++++
+ 1 files changed, 128 insertions(+), 7 deletions(-)
+
+diff --git a/locale/programs/ld-identification.c b/locale/programs/ld-identification.c
+index 1c3be9b..9ec1be8 100644
+--- a/locale/programs/ld-identification.c
++++ b/locale/programs/ld-identification.c
+@@ -162,45 +162,14 @@ No definition for %s category found"), "LC_IDENTIFICATION");
+   TEST_ELEM (date);
+ 
+   for (num = 0; num < __LC_LAST; ++num)
+-    {
+-      /* We don't accept/parse this category, so skip it early.  */
+-      if (num == LC_ALL)
+-	continue;
+-
+-      if (identification->category[num] == NULL)
+-	{
+-	  if (verbose && ! nothing)
+-	    record_warning (_("\
++    if (num != LC_ALL && identification->category[num] == NULL)
++      {
++        if (verbose && ! nothing)
++          record_warning (_("\
+ %s: no identification for category `%s'"), "LC_IDENTIFICATION",
+-			    category_name[num]);
+-	  identification->category[num] = "";
+-	}
+-      else
+-	{
+-	  /* Only list the standards we care about.  This is based on the
+-	     ISO 30112 WD10 [2014] standard which supersedes all previous
+-	     revisions of the ISO 14652 standard.  */
+-	  static const char * const standards[] =
+-	    {
+-	      "posix:1993",
+-	      "i18n:2004",
+-	      "i18n:2012",
+-	    };
+-	  size_t i;
+-	  bool matched = false;
+-
+-	  for (i = 0; i < sizeof (standards) / sizeof (standards[0]); ++i)
+-	    if (strcmp (identification->category[num], standards[i]) == 0)
+-	      matched = true;
+-
+-	  if (matched != true)
+-	    record_error (0, 0, _("\
+-%s: unknown standard `%s' for category `%s'"),
+-			  "LC_IDENTIFICATION",
+-			  identification->category[num],
+-			  category_name[num]);
+-	}
+-    }
++                            category_name[num]);
++        identification->category[num] = "";
++      }
+ }
+ 
+ 

@@ -8,6 +8,6 @@ BBFILES ?= ""
 BBLAYERS ?= " \
   ##OEROOT##/meta \
   ##OEROOT##/meta-baikal-t \
-  ##OEROOT##/meta-external-toolchain \
+  ##OEROOT##/meta-openembedded/meta-oe \
   ##OEROOT##/meta-recovery \
   "
