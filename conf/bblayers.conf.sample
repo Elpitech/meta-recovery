@@ -9,5 +9,6 @@ BBLAYERS ?= " \
   ##OEROOT##/meta \
   ##OEROOT##/meta-baikal-t \
   ##OEROOT##/meta-openembedded/meta-oe \
+  ##OEROOT##/meta-micropython \
   ##OEROOT##/meta-recovery \
   "
