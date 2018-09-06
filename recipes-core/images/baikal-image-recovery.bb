@@ -22,6 +22,8 @@ IMAGE_FEATURES = ""
 RECOVERY_IMAGE_EXTRA_INSTALL ??= ""
 RECOVERY_IMAGE_TEST_BENCHES ??= ""
 RECOVERY_IMAGE_EXTRA_LINGUAS ??= ""
+SDK_HOST_TOOLCHAIN ??= ""
+SDK_TARGET_TOOLCHAIN ??= ""
 
 # The image is going to have both initrd and recovery rootfs features. We explicitly set the
 # PACKAGE_INSTALL list here so to exclude all the possible features declared by disro/machine
@@ -34,6 +36,11 @@ PACKAGE_INSTALL += "${VIRTUAL-RUNTIME_base-utils} ${VIRTUAL-RUNTIME_syslog} ${VI
 PACKAGE_INSTALL += "base-files tzdata"
 PACKAGE_INSTALL += "netbase"
 PACKAGE_INSTALL += "${RECOVERY_IMAGE_EXTRA_INSTALL} ${RECOVERY_IMAGE_TEST_BENCHES} ${ROOTFS_BOOTSTRAP_INSTALL}"
+
+# List of host/target utilities added to be part of SDKs.
+# NOTE Never set them globally, otherwise buildtools-tarball gets crazy.
+TOOLCHAIN_HOST_TASK_append = " ${SDK_HOST_TOOLCHAIN}"
+TOOLCHAIN_TARGET_TASK_append = " ${SDK_TARGET_TOOLCHAIN}"
 
 # Locales to be added to the image
 # NOTE They are very heavy!
