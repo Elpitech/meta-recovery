@@ -3,9 +3,9 @@
 ###################################################################################################
 # Next values of the default kernel/u-boot version will be used only if the meta isn't used within
 # SDK, but if it is, then the version shall be determined right from the sources.
-LINUX_KERNEL_TYPE ?= ""
+LINUX_KERNEL_TYPE ?= "standard"
 PREFERRED_VERSION_linux-yocto ?= "4.4%"
-PREFERRED_VERSION_u-boot-baikal ?= "2014.10"
+PREFERRED_VERSION_u-boot ?= "2014.10"
 # Enable busybox as the main services provider for the recovery image. It shall consume less memory
 # but give us enough basic functionality. If some busybox features intersects the utilities from
 # RECOVERY_IMAGE_EXTRA_INSTALL they shall be alternated by update-alternatives tool, since obviously
