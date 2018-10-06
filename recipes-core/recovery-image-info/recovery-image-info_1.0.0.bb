@@ -5,7 +5,8 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=801f80980d171dd6425610833a22dbe6"
 DEPENDS = "coreutils-native"
 
 SRC_URI = "git://192.168.1.253/IT/T-Platforms/sdk/rii;protocol=ssh;user=git"
-SRCREV = "${AUTOREV}"
+SRCREV = "AUTOINC"
+
 S = "${WORKDIR}/git"
 
 inherit autotools

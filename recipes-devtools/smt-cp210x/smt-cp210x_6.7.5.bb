@@ -6,8 +6,10 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=6d9d7e78eb4f127a22fd3d8b29cb7686"
 # util-linux added to get libuuid
 DEPENDS = "libusb1 util-linux"
 
-SRC_URI = "git://github.com/fancer/smt-cp210x.git;tag=v${PV}.1 \
+SRC_URI = "git://github.com/fancer/smt-cp210x.git \
            file://cp2108_p234_rs485.configuration"
+SRCREV = "AUTOINC"
+
 S = "${WORKDIR}/git"
 
 inherit cmake
