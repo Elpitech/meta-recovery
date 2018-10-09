@@ -47,6 +47,24 @@
 MACHINE ??= "sfbt1"
 
 #
+# Local packages mirror
+#
+# Globally inherited own-mirrors class helps to save a time of downloading the
+# packages all the time.
+#
+SOURCE_MIRROR_URL ?= "file:///srv/dists/yocto"
+INHERIT += "own-mirrors"
+
+#
+# Parallelism Options
+#
+# These two options control how much parallelism BitBake should use. The first
+# option determines how many tasks bitbake should run in parallel:
+#
+BB_NUMBER_THREADS ?= "16"
+PARALLEL_MAKE ?= "-j 16"
+
+#
 # Where to place downloads
 #
 # During a first build the system will download many different source code tarballs
