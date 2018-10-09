@@ -148,14 +148,14 @@ image_info_cook () {
         # Retrieve current item to handle and check whether it's the last one in the sections list
         item=$(echo "${sections%%;;*}" | sed 's/^\s*//g;s/\s*$//g')
         sections=$(echo "${sections#*;;}" | sed 's/^\s*//g;s/\s*$//g')
-        [ "${sections}" == "${item}" ] && sections=""
+        [ "${sections}" = "${item}" ] && sections=""
 
         # Retrieve section parameters
         type=$(printf "%s" "$item" | cut -d";" -f1)
         size=$(printf "%s" "$item" | cut -d";" -f2)
         data=$(printf "%s" "$item" | cut -d";" -f3)
 
-        if [ "$type" == "int" ]; then
+        if [ "$type" = "int" ]; then
             image_info_dump_int "$size" "$data" "$outfile"
         else
             image_info_dump_string "$size" "$data" "$outfile"

@@ -96,7 +96,7 @@ baikal_image_mkrom () {
         # Retrieve current item to handle and check whether it's the last one in the sections list
         item=$(echo "${sections%%;;*}" | sed 's/^\s*//g;s/\s*$//g')
         sections=$(echo "${sections#*;;}" | sed 's/^\s*//g;s/\s*$//g')
-        [ "${sections}" == "${item}" ] && sections=""
+        [ "${sections}" = "${item}" ] && sections=""
 
         itemsize=$(baikal_image_dump_item "${item}" "${outfile}")
 
