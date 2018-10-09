@@ -1,5 +1,5 @@
 #
-# T-platforms SDK version
+# T-platforms SDK version and sources
 #
 # SDK version is statically set here so to have at least some value used
 # by SDK-specific meta code.
@@ -7,6 +7,7 @@
 TPSDK_VERSION ?= "1.0"
 TPSDK_REVISION ?= "0"
 TPSDK_RCCYCLE ?= "0"
+TPSDK_REPO ?= "gitlab.tpl"
 
 #
 # Yocto SDK settings

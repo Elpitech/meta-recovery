@@ -1,5 +1,7 @@
+TPSDK_REPO ?= "gitlab.tpl"
+
 KBRANCH = "${PV}.x-tp"
-SRC_URI = "git://192.168.1.253/IT/T-Platforms/utils/flashrom.git;protocol=ssh;user=git;branch=${KBRANCH} \
+SRC_URI = "git://${TPSDK_REPO}/utils/flashrom.git;protocol=ssh;user=git;branch=${KBRANCH} \
            file://sst26.patch \
            file://0001-platform-Add-riscv-to-known-platforms.patch"
 SRCREV = "AUTOINC"
