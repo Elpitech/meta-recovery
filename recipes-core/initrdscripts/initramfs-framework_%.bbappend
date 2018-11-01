@@ -1,7 +1,8 @@
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-SRC_URI += "file://initfs"
+SRC_URI += "file://initfs \
+            file://finish"
 
 do_install_append() {
     # RAM-rootfs
