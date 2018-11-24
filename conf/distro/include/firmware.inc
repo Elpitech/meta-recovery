@@ -90,6 +90,7 @@ KERNEL_DEVICETREE_BUNDLE ?= "0"
 KERNEL_IMAGE_MAXSIZE ?= "16384"
 KERNEL_USES_DEVFS ?= "1"
 UBOOT_SIGN_ENABLE ?= "1"
+UBOOT_SIGN_KEYNAME ?= "baikal"
 
 # Initramfs is used either as recovery rootfs image or to preload some kernel modules before
 # the actual kernel is booted. Recovery initial ramdisk is based on the busybox with
