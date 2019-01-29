@@ -27,7 +27,7 @@ index 52967ea8f351..5a2d44c7e790 100644
  #include "libbb.h"
  #include "common_bufsiz.h"
 +
-+#include <asm-generic/ioctls.h>
++#include <asm/ioctls.h>
 +#include <linux/ioctl.h>
 +#include <linux/serial.h>
  

@@ -25,7 +25,7 @@ index 52967ea8f351..5a2d44c7e790 100644
  
  #include "libbb.h"
  
-+#include <asm-generic/ioctls.h>
++#include <asm/ioctls.h>
 +#include <linux/ioctl.h>
 +#include <linux/serial.h>
 +
@@ -125,7 +125,7 @@ index 52967ea8f351..5a2d44c7e790 100644
 +
 +	if (rs485 < 0) {
 +		if (all) {
-+			wrapf("RS485 not supported");
++			wrapf("RS485 not supported (error %d)", rs485);
 +			newline();
 +		}
 +	} else {
