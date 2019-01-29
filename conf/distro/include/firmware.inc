@@ -24,7 +24,7 @@ VIRTUAL-RUNTIME_syslog = "busybox-syslog"
 # Default values of U-boot environment variables. They can be redefined
 # in the machine-specific conf-files if needed to be.
 UBOOT_ENV_SIZE ?= "${@'${RECOVERY_ROM_ENVIRONMENT}'.split(':')[1]}"
-UBOOT_ENV_BUILD_IMAGE ?= "T-platforms ${MACHINE} (${DISTRO} ${DISTRO_VERSION}) boot ROM image"
+UBOOT_ENV_BUILD_IMAGE ?= "Yocto ${MACHINE} ${DISTRO} ${DISTRO_VERSION}"
 UBOOT_ENV_BUILD_VERSION ?= "${TPSDK_VERSION}"
 UBOOT_ENV_CONSOLE ?= "${@'${SERIAL_CONSOLE}'.split()[1]}"
 UBOOT_ENV_BAUDRATE ?= "${@'${SERIAL_CONSOLE}'.split()[0]}"
@@ -74,7 +74,7 @@ UBOOT_ENV_BOOTUNITS ?= "\
 	net_nfs=12. Boot via NFS (dhcp/192.168.0.1) to initrd;nfs=initfs;ip=dhcp;srvip=192.168.0.1;dir=/boot;; \
 	reset=Reset board;reset \
 "
-UBOOT_ENV_MENU_MAIN ?= "rec_ram;;rec_sda1;;rec_sdb1;;rec_sdb1;;usb_sda1;;usb_sdb1;; \
+UBOOT_ENV_MENU_MAIN ?= "rec_ram;;rec_sda1;;rec_sdb1;;usb_ram;;usb_sda1;;usb_sdb1;; \
 			sata_ram;;sata_sda1;;sata_sdb1;;net_stat;;net_dhcp;;net_nfs;;reset"
 
 ###################################################################################################
@@ -154,7 +154,7 @@ DEFAULT_TIMEZONE ?= "Europe/Moscow"
 # NOTE Drop mtd-utils package if you want to speed the build up, since it got heavy dependencies.
 # There is still some mtd functionality embedded into the busybox binary.
 RECOVERY_IMAGE_EXTRA_INSTALL ?= "dropbear ethtool mtd-utils u-boot-fw-utils hdparm parted e2fsprogs e2fsprogs-e2fsck e2fsprogs-mke2fs e2fsprogs-tune2fs e2fsprogs-badblocks e2fsprogs-resize2fs dosfstools squashfs-tools pciutils setserial lrzsz i2c-tools spi-tools lmsensors-sensors sysfsutils cpufrequtils xxd recovery-image-info lsscsi micropython micropython-lib"
-RECOVERY_IMAGE_TEST_BENCHES ?= "serialcheck rt-tests whetstone dhrystone memtester tinymembench stressapptest libc-bench dbench tbench fio nbench-byte sysbench stress-ng"
+RECOVERY_IMAGE_TEST_BENCHES ?= "serialcheck rt-tests whetstone dhrystone memtester tinymembench stressapptest libc-bench dbench tbench fio nbench-byte sysbench stress-ng trace-cmd"
 # Glibc locales can be also added to the image, like en-gb or ru-ru. But you should note,
 # that they are too heavy, ~2Mb each so I wouldn't do this.
 RECOVERY_IMAGE_EXTRA_LINGUAS ?= ""
