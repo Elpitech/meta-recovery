@@ -158,3 +158,8 @@ RECOVERY_IMAGE_TEST_BENCHES ?= "serialcheck rt-tests whetstone dhrystone memtest
 # Glibc locales can be also added to the image, like en-gb or ru-ru. But you should note,
 # that they are too heavy, ~2Mb each so I wouldn't do this.
 RECOVERY_IMAGE_EXTRA_LINGUAS ?= ""
+# The kernel vmlinux image gets to be installed in case if any kernel module is built and
+# installed to the recovery rootfs. It dramatically expandes the recovery image. Since we really
+# don't need it being embedded into the recovery rootfs tree in any case we can freely remove
+# the dependency here for the whole distro.
+RDEPENDS_${KERNEL_PACKAGE_NAME}-base = ""
