@@ -25,28 +25,21 @@
 [ "$UTC" = "yes" ] && tz="--utc" || tz="--localtime"
 case "$1" in
         start)
-                if [ "$VERBOSE" != no ]
-                then
-                        echo "System time was `date`."
-                        echo "Setting system time from hardware clocks..."
-                fi
-
 		if [ "$HWCLOCKACCESS" != no ]
 		then
+			[ "$VERBOSE" != no ] && echo "Fetch time from hardware clocks (current time `date`)..."
+
 			if [ -z "$TZ" ]
 			then
 	                   hwclock $tz --hctosys 2>/dev/null
 			else
 			   TZ="$TZ" hwclock $tz --hctosys 2>/dev/null
 			fi
-		fi
 
-                if [ "$VERBOSE" != no ]
-                then
-                        echo "System clocks set. Local time is `date` now."
-                fi
-                ;;
-        stop|restart|reload|force-reload)
+			[ "$VERBOSE" != no ] && echo "Local time is `date` now."
+		fi
+		;;
+	stop|restart|reload|force-reload)
 		#
 		# Updates the Hardware Clock with the System Clock time.
 		# This will *override* any changes made to the Hardware Clock.
@@ -54,20 +47,17 @@ case "$1" in
 		# WARNING: If you disable this, any changes to the system
 		#          clock will not be carried across reboots.
 		#
-		if [ "$VERBOSE" != no ]
-		then
-			echo "Saving system time to hardware clocks..."
-		fi
 		if [ "$HWCLOCKACCESS" != no ]
 		then
+			[ "$VERBOSE" != no ] && echo "Saving system time to hardware clocks..."
+
 			hwclock $tz --systohc 2>/dev/null
+
+			[ "$VERBOSE" != no -a "$?" == "0" ] && echo "Hardware clocks updated to `date`."
 		fi
-		if [ "$VERBOSE" != no -a "$?" == "0" ]
-		then
-			echo "Hardware clocks updated to `date`."
-		fi
-                exit 0
-                ;;
+
+		exit 0
+		;;
 	show)
 		if [ "$HWCLOCKACCESS" != no ]
 		then
