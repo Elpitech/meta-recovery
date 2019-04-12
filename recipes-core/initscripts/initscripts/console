@@ -1,0 +1,28 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          console
+# Required-Start:    $local_fs module-init-tools
+# Required-Stop:     $local_fs
+# Default-Start:     S
+# Default-Stop:      0 6
+# Short-Description: Load console font
+### END INIT INFO
+
+. /etc/default/rcS
+
+PROG=/usr/sbin/setfont
+
+case $1 in
+	start)
+		if [ -z "$CONSOLEFONT" -o ! -x $PROG ] ; then
+			exit 0
+		fi
+		echo "Loading console font $CONSOLEFONT"
+		$PROG $CONSOLEFONT -C /dev/tty1
+		res=$?
+		exit $res
+	;;
+	*)
+		echo "Usage: $0 start"
+		exit 1
+esac
