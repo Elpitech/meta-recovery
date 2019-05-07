@@ -1,0 +1,21 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          serkbd
+# Required-Start:    $local_fs module-init-tools
+# Required-Stop:     $local_fs
+# Default-Start:     S
+# Default-Stop:      0 6
+# Short-Description: Start serio line discipline
+### END INIT INFO
+
+DAEMON=/usr/sbin/serkbd
+LINE=/dev/@@SERIO_LINE@@
+
+case $1 in
+	start)
+		[ -x $DAEMON -a -c $LINE ] && $DAEMON $LINE
+	;;
+	*)
+		echo "Usage: $0 start"
+		exit 1
+esac
