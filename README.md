@@ -25,7 +25,7 @@
   `TPSDK_XTC` - resource to fetch the cross-toolchain (sdk or git)
   The SDK version is also declared there.
 
-- General build settings can be customized in `conf/distro/include/formware.inc`
+- General build settings can be customized in `conf/distro/include/firmware.inc`
   Detailed description is in the file itself.
 
 ## Behavior
@@ -49,13 +49,13 @@ Since most of the boards are supplied with hwmon and temperature sensors
 lmsensors software is also included. Aside from limited busybox network
 manager tools there are dropbear and ethtool utilities installed to the
 image. If your board doesn't expose any traditional interfaces, you can use
-serial console in conjuction with seterial and lrzsz to upload necessary
-software. Finally you may won't to test the system stamina and functionality,
+serial console in conjuction with setserial and lrzsz to upload necessary
+software. Finally you may want to test the system stamina and functionality,
 in this case there are rt-tests, whetstone, dhrystone, memtester, tinymembench
 and libc-bench at your service.
 
 As a result of the image build process, you'll find the
-baikal-image-recovery.rom file in the buila/tmp/deploy/image/<machin>/
+baikal-image-recovery.rom file in the build/tmp/deploy/image/<machine>/
 directory. SDK is supplied with flashrom utility, which can be burned to
 the Baikal-T SPI-flash storage.
 
