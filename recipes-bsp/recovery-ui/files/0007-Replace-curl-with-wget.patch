@@ -1,0 +1,27 @@
+From 3d8cdb1f5512c29d1b1d363d516e71716565c524 Mon Sep 17 00:00:00 2001
+From: "Vadim V. Vlasov" <vadim.vlasov@t-platforms.ru>
+Date: Tue, 18 Jun 2019 19:49:22 +0300
+Subject: [PATCH 7/7] Replace curl with wget
+
+---
+ getrom.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/getrom.sh b/getrom.sh
+index 13ae1f0..09ef38e 100644
+--- a/getrom.sh
++++ b/getrom.sh
+@@ -6,8 +6,8 @@ URL=$1
+ cd ${VAR_PREFIX}
+ echo "I: Fetching ${URL}"
+ if [ -e /tmp/update-web.rom ]; then rm /tmp/update-web.rom; fi
+-echo "${VAR_PREFIX}: /usr/bin/curl "${URL}" -o /tmp/update-web.rom"
+-/usr/bin/curl "${URL}" -o /tmp/update-web.rom
++echo "${VAR_PREFIX}: /usr/bin/wget "${URL}" -O /tmp/update-web.rom"
++/usr/bin/wget "${URL}" -O /tmp/update-web.rom
+ RET=$?
+ if [ ${RET} -ne 0 ]; then
+     if [ -e /tmp/update-web.rom ]; then rm /tmp/update-web.rom; fi
+-- 
+2.7.4
+
