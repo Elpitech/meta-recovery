@@ -1,0 +1,57 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          recovery ui
+# Required-Start:    mountall module-init-tools volatile
+# Required-Stop: 
+# Default-Start:     S
+# Default-Stop:      0 6
+# Short-Description: Start recovery-ui
+### END INIT INFO
+
+. /etc/default/rcS
+
+DAEMON=/usr/bin/recovery-ui
+[ -x $DAEMON ] || exit 0
+
+VAR_PREFIX=/var/run/recoveryui
+
+case $1 in
+	start)
+	;;
+	*)
+		echo "Usage: $0 start"
+		exit 1
+esac
+export TERM=linux
+export VAR_PREFIX
+mkdir -p $VAR_PREFIX
+mkdir -p $VAR_PREFIX/int
+mkdir -p $VAR_PREFIX/ext
+BACKUP_DEV=sda5
+
+# unmount backup partition if it is mounted
+for mntp in /media/sda* ; do umount $mntp; rmdir $mntp; done
+grep /dev/$BACKUP_DEV /proc/mounts && umount /dev/$BACKUP_DEV
+# check for recovery.tar on already mounted devices
+cat /proc/mounts|sed -ne 's%^/dev/\([a-z0-9]*\) \(/[a-z0-9/_]*\).*$%\1 \2%p' | while read mdev dir ; do
+	/usr/bin/check-recovery.sh $mdev $dir
+done
+
+# mount backup partiton and check for backup
+mkdir -p /recovery
+mount /dev/$BACKUP_DEV /recovery
+/usr/bin/check-recovery.sh $BACKUP_DEV /recovery
+
+# append the check to mdev-mount
+cat >> /etc/mdev/mdev-mount.sh << EOF
+if [ "\$ACTION" == "add" ]; then
+    /usr/bin/check-recovery.sh \${MDEV} \${MOUNTPOINT}
+fi
+EOF
+
+[ "$VERBOSE" != "no" ] && echo "Starting recovery-ui..."
+echo "2 2 1 7" > /proc/sys/kernel/printk
+VT_NUM=`fgconsole --next-available`
+chvt $VT_NUM
+( while true ; do $DAEMON < /dev/tty$VT_NUM > /dev/tty$VT_NUM 2>&1 ; done ) &
+
