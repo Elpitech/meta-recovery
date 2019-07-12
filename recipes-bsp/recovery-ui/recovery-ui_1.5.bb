@@ -21,6 +21,8 @@ SRC_URI = "git://${TPSDK_REPO}/mitx/recovery/recovery-ui.git;protocol=ssh;user=g
            file://0005-Fix-BMC-version-and-bootreason-paths.patch \
            file://0006-Make-sure-that-rfs_version-and-kernel_release-string.patch \
            file://0007-Replace-curl-with-wget.patch \
+           file://0008-Change-menu-headers.patch \
+           file://0009-Poweroff-instead-of-reboot-on-exit.patch \
            file://recovery-ui \
            file://btflash.sh \
            file://check-recovery.sh"
