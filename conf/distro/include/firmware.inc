@@ -136,6 +136,8 @@ RECOVERY_INFO_MAGIC      ?= "0xDEADBEEFBAADF00DULL"
 # Kernel root-password and hostname
 RECOVERY_PWD_ROOT ?= "tplatforms"
 RECOVERY_HOSTNAME ?= "${MACHINE}"
+# Recovery version (previous non-yocto version was 1.3.1)
+RECOVERY_VERSION ?= "1.4.0"
 
 # Linux mtd-device to access the U-boot environment section used by
 # fw_printenv/fw_setenv U-boot utils
