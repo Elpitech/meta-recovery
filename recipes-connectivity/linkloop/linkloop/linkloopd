@@ -1,0 +1,50 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:             linkloopd
+# Required-Start:       $remote_fs $syslog $networking
+# Required-Stop:        $remote_fs $syslog
+# Default-Start:        2 3 4 5
+# Default-Stop:         1
+# Short-Description:    Link-layer (layer 2) Ping server
+### END INIT INFO
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+NAME=linkloopd
+DAEMON=/usr/bin/linkloop_reply
+LANSCAN=/usr/bin/lanscan
+DESC="Linkloop Reply server"
+PIDFILE=/var/run/linkloopd.pid
+
+set -e
+
+test -x "$DAEMON" || exit 0
+test -x "$LANSCAN" || exit 0
+
+case "$1" in
+  start)
+	echo -n "Starting $DESC: "
+	start-stop-daemon -S -x "$DAEMON" -m -p $PIDFILE -b \
+	  -- $(${LANSCAN} -o)
+	echo ${NAME}.
+	;;
+  stop)
+	echo -n "Stopping $DESC: "
+	start-stop-daemon -K -x "$DAEMON" -p $PIDFILE
+	echo "$NAME."
+	;;
+  restart|force-reload)
+	echo -n "Restarting $DESC: "
+	start-stop-daemon -K -x "$DAEMON" -p $PIDFILE
+	sleep 1
+	start-stop-daemon -S -x "$DAEMON" -m -p $PIDFILE -b \
+	  -- $(${LANSCAN} -o)
+	echo "$NAME."
+	;;
+  *)
+	N=/etc/init.d/$NAME
+	echo "Usage: $N {start|stop|restart|force-reload}" >&2
+	exit 1
+	;;
+esac
+
+exit 0

@@ -63,12 +63,12 @@ UBOOT_ENV_BOOTUNITS ?= "\
 	rec_ram=1.  Boot from flash to initrd;rom=initfs;; \
 	rec_sda1=2.  Boot from flash to /dev/sda1 FS;rom=/dev/sda1;; \
 	rec_sdb1=3.  Boot from flash to /dev/sdb1 FS;rom=/dev/sdb1;; \
-	usb_ram=4.  Boot from USB fat 0:1 to initrd;usb=initfs;fs=fat;part=0:1;dir=/;; \
-	usb_sda1=5.  Boot from USB ext 0:1 to /dev/sda1 FS;usb=/dev/sda1;fs=ext;part=0:1;dir=/boot;; \
-	usb_sdb1=6.  Boot from USB ext 0:1 to /dev/sdb1 FS;usb=/dev/sdb1;fs=ext;part=0:1;dir=/boot;; \
-	sata_ram=7.  Boot from SATA fat 0:1 to initrd;usb=initfs;fs=fat;part=0:1;dir=/;; \
-	sata_sda1=8.  Boot from SATA ext 0:1 to /dev/sda1 FS;sata=/dev/sda1;fs=ext;part=0:1;dir=/boot;; \
-	sata_sdb1=9.  Boot from SATA ext 0:1 to /dev/sdb1 FS;sata=/dev/sdb1;fs=ext;part=0:1;dir=/boot;; \
+	usb_ram=4.  Boot from USB 0:1 to initrd;usb=initfs;part=0:1;dir=/;; \
+	usb_sda1=5.  Boot from USB 0:1 to /dev/sda1 FS;usb=/dev/sda1;part=0:1;dir=/boot;; \
+	usb_sdb1=6.  Boot from USB 1:1 to /dev/sdb1 FS;usb=/dev/sdb1;part=1:1;dir=/boot;; \
+	sata_ram=7.  Boot from SATA 0:1 to initrd;usb=initfs;part=0:1;dir=/;; \
+	sata_sda1=8.  Boot from SATA 0:1 to /dev/sda1 FS;sata=/dev/sda1;part=0:1;dir=/boot;; \
+	sata_sdb1=9.  Boot from SATA 1:1 to /dev/sdb1 FS;sata=/dev/sdb1;part=1:1;dir=/boot;; \
 	net_stat=10. Boot via TFTP (192.168.0.2/192.168.0.1) to initrd;tftp=initfs;ip=192.168.0.2;srvip=192.168.0.1;; \
 	net_dhcp=11. Boot via TFTP (dhcp/192.168.0.1) to initrd;tftp=initfs;ip=dhcp;srvip=192.168.0.1;; \
 	net_nfs=12. Boot via NFS (dhcp/192.168.0.1) to initrd;nfs=initfs;ip=dhcp;srvip=192.168.0.1;dir=/boot;; \
@@ -155,8 +155,15 @@ DEFAULT_TIMEZONE ?= "Europe/Moscow"
 # to not exceed the image size limitations, since they can pull in some heavy denendencies.
 # NOTE Drop mtd-utils package if you want to speed the build up, since it got heavy dependencies.
 # There is still some mtd functionality embedded into the busybox binary.
-RECOVERY_IMAGE_EXTRA_INSTALL ?= "dropbear ethtool mtd-utils u-boot-fw-utils hdparm parted e2fsprogs e2fsprogs-e2fsck e2fsprogs-mke2fs e2fsprogs-tune2fs e2fsprogs-badblocks e2fsprogs-resize2fs dosfstools squashfs-tools pciutils setserial lrzsz i2c-tools spi-tools lmsensors-sensors sysfsutils cpufrequtils xxd recovery-image-info lsscsi micropython micropython-lib"
-RECOVERY_IMAGE_TEST_BENCHES ?= "serialcheck rt-tests whetstone dhrystone memtester tinymembench stressapptest libc-bench dbench tbench fio nbench-byte sysbench stress-ng trace-cmd"
+RECOVERY_IMAGE_EXTRA_INSTALL ?= "dropbear ethtool mtd-utils u-boot-fw-utils hdparm parted \
+                                 e2fsprogs e2fsprogs-e2fsck e2fsprogs-mke2fs e2fsprogs-tune2fs \
+                                 e2fsprogs-badblocks e2fsprogs-resize2fs dosfstools squashfs-tools \
+                                 pciutils setserial lrzsz i2c-tools spi-tools lmsensors-sensors \
+                                 sysfsutils cpufrequtils xxd recovery-image-info lsscsi \
+                                 micropython micropython-lib"
+RECOVERY_IMAGE_TEST_BENCHES ?= "serialcheck rt-tests whetstone dhrystone memtester tinymembench \
+                                stressapptest libc-bench dbench tbench fio iozone3 nbench-byte \
+                                sysbench stress-ng trace-cmd"
 # Glibc locales can be also added to the image, like en-gb or ru-ru. But you should note,
 # that they are too heavy, ~2Mb each so I wouldn't do this.
 RECOVERY_IMAGE_EXTRA_LINGUAS ?= ""

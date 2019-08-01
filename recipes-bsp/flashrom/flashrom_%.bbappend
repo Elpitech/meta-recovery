@@ -7,6 +7,8 @@ SRC_URI = "git://${TPSDK_REPO}/utils/flashrom.git;protocol=ssh;user=git;branch=$
 SRCREV = "AUTOINC"
 S = "${WORKDIR}/git"
 
+DEPENDS += "libftdi"
+
 do_install_append_class-nativesdk() {
     mv ${D}${prefix}/sbin ${D}${sbindir}
 }
