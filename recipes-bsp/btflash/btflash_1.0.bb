@@ -9,7 +9,7 @@ KBRANCH = "master"
 PV = "1.0"
 
 SRCREV = "AUTOINC"
-SRC_URI = "git://${TPSDK_REPO}/mitx/btflash.git;protocol=ssh;user=git;branch=${KBRANCH} \
+SRC_URI = "git://${TPSDK_REPO}/utils/btflash.git;protocol=ssh;user=git;branch=${KBRANCH} \
            file://Makefile.patch "
 
 S = "${WORKDIR}/git"
