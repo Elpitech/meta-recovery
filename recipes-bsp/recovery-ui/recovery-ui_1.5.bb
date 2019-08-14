@@ -13,16 +13,7 @@ PV = "1.5"
 FILES_${PN} = "${sysconfdir}/init.d/* ${bindir}/*"
 
 SRCREV = "AUTOINC"
-SRC_URI = "git://${TPSDK_REPO}/mitx/recovery/recovery-ui.git;protocol=ssh;user=git;branch=${KBRANCH} \
-           file://0001-Add-fru.-ch-from-libmitxfru-package.patch \
-           file://0002-Update-Makefile-to-support-yocto-build.patch \
-           file://0003-Change-shell-name-in-script-headers.patch \
-           file://0004-Fix-shred-GPIO-base.patch \
-           file://0005-Fix-BMC-version-and-bootreason-paths.patch \
-           file://0006-Make-sure-that-rfs_version-and-kernel_release-string.patch \
-           file://0007-Replace-curl-with-wget.patch \
-           file://0008-Change-menu-headers.patch \
-           file://0009-Poweroff-instead-of-reboot-on-exit.patch \
+SRC_URI = "git://${TPSDK_REPO}/utils/recovery-ui.git;protocol=ssh;user=git;branch=${KBRANCH} \
            file://recovery-ui \
            file://btflash.sh \
            file://check-recovery.sh"
