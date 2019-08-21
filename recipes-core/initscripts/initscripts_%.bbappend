@@ -10,6 +10,7 @@ SRC_URI += "file://rcS-default \
             file://urandom \
             file://bootmisc.sh \
             ${@["", "file://console"][(d.getVar('RECOVERY_FONT') != '')]} \
+            ${@["", "file://getpass"][(d.getVar('RECOVERY_SETPASS') != '')]} \
             file://populate-volatile.sh"
 
 HALTARGS = "-f"
@@ -23,6 +24,11 @@ do_install_append () {
 		install -m 0755 ${WORKDIR}/console ${D}${sysconfdir}/init.d/console
 		update-rc.d -r ${D} console start 34 S .
 		echo CONSOLEFONT="${RECOVERY_FONT}" >> ${D}${sysconfdir}/default/rcS
+	fi
+	if [ -n "${RECOVERY_SETPASS}" ] ; then
+		install -d ${D}${sysconfdir}/init.d
+		install -m 0755 ${WORKDIR}/getpass ${D}${sysconfdir}/init.d/getpass
+		update-rc.d -r ${D} getpass start 10 S .
 	fi
 
         # Create build-specific random seed

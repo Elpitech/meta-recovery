@@ -1,0 +1,39 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          getpass
+# Required-Start:    $local_fs mountvirtfs
+# Required-Stop:     $local_fs
+# Default-Start:     S
+# Default-Stop:
+# Short-Description: Read root password from FRU
+# Description:       Read root password from FRU
+### END INIT INFO
+
+[ -f /usr/bin/mitxfru-tool ] || exit 1
+
+case "$1" in
+	start|"")
+		retry=0
+		passok=0
+		while [ ${retry} -lt 10 ]; do
+			let retry=retry+1
+			ret=$(mitxfru-tool -g c2 -q)
+			rc=$?
+			if [ ${rc} -eq 0 ]; then
+				let passok=1
+				if [ ! -z "${ret}" ]; then
+					sed -i -e "/^root:.*/c \\${ret}" /etc/shadow
+					break
+				fi
+			fi
+		done
+
+		echo "${passok}" > /var/bootstat
+		;;
+	*)
+		echo "Usage: getpass [start]" >&2
+		exit 1
+		;;
+esac
+
+exit 0
