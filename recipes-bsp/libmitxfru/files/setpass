@@ -1,0 +1,14 @@
+#!/bin/sh
+
+read -p "New password:" -s pass1
+echo ""
+read -p "One more time:" -s pass2
+echo ""
+if [ "${pass1}" == "${pass2}" ]; then
+	echo "root:${pass1}" | chpasswd -c SHA256
+	passwd=$(grep ^root /etc/shadow)
+	mitxfru-tool -s c2 -d "${passwd}" -q
+	echo "DONE"
+else
+	echo "Passwords mismatch"
+fi

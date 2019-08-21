@@ -1,0 +1,41 @@
+--- a/Makefile	2019-03-27 15:05:57.215320920 +0300
++++ b/Makefile	2019-03-27 15:48:12.524625319 +0300
+@@ -1,20 +1,11 @@
+ TOOL=mitxfru-tool
+-CROSS_COMPILE ?=
+-CROSS_ROOT?=
+-PREFIX ?= .
+-BRANCH?=master
+-GSUF_PATH ?= $(shell pwd)/gsuf/
+-VERSION = $(shell python $(GSUF_PATH)/gsuf.py --main-branch $(BRANCH))
+-CC = $(CROSS_COMPILE)gcc
+-CFLAGS = -Wall -I./ -I$(CROSS_ROOT)/usr/include -DRECOVERY -DVERSION="$(VERSION)"
+-LDFLAGS = -L$(CROSS_ROOT)/usr/lib
++PREFIX ?= /usr
++VERSION ?= 1.0
++CFLAGS += -DVERSION="$(VERSION)" -I. -DRECOVERY
+ SOURCES = fru.c mitxfru-tool.c
+ OBJECTS = $(patsubst %.c, %.o, $(SOURCES))
+ 
+-all: prepare $(TOOL)
+-
+-prepare:
+-	if [ ! -e $(GSUF_PATH) ]; then git clone https://github.com/snegovick/gsuf.git; fi
++all: $(TOOL)
+ 
+ $(TOOL): $(OBJECTS)
+ 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+@@ -24,10 +15,9 @@ $(TOOL): $(OBJECTS)
+ 
+ .PHONY: install
+ install:
+-ifneq ($(PREFIX),.)
+-	cp $(TOOL) $(PREFIX)
+-endif
++	install -d -D -m 755 $(DESTDIR)$(PREFIX)/bin
++	install -m 755 $(TOOL) $(DESTDIR)$(PREFIX)/bin
+ 
+ .PHONY: clean
+ clean:
+-	rm $(TOOL) $(OBJECTS)
++	rm -f $(TOOL) $(OBJECTS)
