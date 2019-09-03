@@ -11,7 +11,7 @@ S = "${WORKDIR}/git"
 
 inherit cmake
 
-PACKAGES =+ "tp-sample-test tp-xa1-msbt2-test tp-xa1-mrbt1-test \
+PACKAGES =+ "tp-sample-test tp-xa1-msbt2-test tp-xa1-mrbt1-test tp-bc3bt1-mrbt1-test \
              tp-pci-test tp-usb-test tp-storage-test tp-eth-test \
              tp-flash-test tp-gpio-test tp-serial-test tp-rtc-test tp-sensors-test"
 
@@ -28,6 +28,10 @@ RDEPENDS_tp-xa1-msbt2-test += "${PN} tp-pci-test tp-usb-test tp-storage-test tp-
 FILES_tp-xa1-mrbt1-test = "${sysconfdir}/tp-test/XA1-MRBT1.yaml"
 RDEPENDS_tp-xa1-mrbt1-test += "${PN} tp-pci-test tp-usb-test tp-storage-test tp-eth-test tp-gpio-test \
                                tp-flash-test tp-sensors-test"
+
+FILES_tp-bc3bt1-mrbt1-test = "${sysconfdir}/tp-test/BC3BT1-MRBT1.yaml"
+RDEPENDS_tp-bc3bt1-mrbt1-test += "${PN} tp-usb-test tp-storage-test tp-eth-test tp-gpio-test \
+                                  tp-serial-test tp-rtc-test tp-sensors-test"
 
 FILES_tp-pci-test = "${sysconfdir}/tp-test/lib/shell/pci.sh ${sysconfdir}/tp-test/cases/pci_*"
 RDEPENDS_tp-pci-test += "${PN} pciutils"
