@@ -13,6 +13,8 @@ SRC_URI = "git://${TPSDK_REPO}/utils/btflash.git;protocol=ssh;user=git;branch=${
 
 S = "${WORKDIR}/git"
 
+EXTRA_OEMAKE = 'CROSS_COMPILE=${TARGET_PREFIX} CC="${CC} ${CFLAGS} ${LDFLAGS}"'
+
 do_install() {
 	oe_runmake install DESTDIR=${D}
 }
