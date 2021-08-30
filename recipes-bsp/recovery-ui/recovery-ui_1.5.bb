@@ -5,7 +5,7 @@ SECTION = "base"
 DEPENDS = "ncurses zlib"
 RDEPENDS_${PN} = "btflash dialog pv"
 
-TPSDK_REPO ?= "gitlab.tpl"
+TPSDK_REPO ?= "github.com"
 KBRANCH = "master"
 
 PV = "1.5"
@@ -13,7 +13,7 @@ PV = "1.5"
 FILES_${PN} = "${sysconfdir}/init.d/* ${bindir}/*"
 
 SRCREV = "AUTOINC"
-SRC_URI = "git://${TPSDK_REPO}/utils/recovery-ui.git;protocol=ssh;user=git;branch=${KBRANCH} \
+SRC_URI = "git://${TPSDK_REPO}/Elpitech/baikal-t-recovery-ui.git;protocol=ssh;user=git;branch=${KBRANCH} \
            file://recovery-ui \
            file://btflash.sh \
            file://check-recovery.sh"

@@ -5,7 +5,7 @@ SECTION = "kernel"
 
 inherit module
 
-TPSDK_REPO ?= "gitlab.tpl"
+TPSDK_REPO ?= "github.com"
 
 SRC_URI = "git://${TPSDK_REPO}/core/cnc;protocol=ssh;user=git"
 SRCREV = "AUTOINC"

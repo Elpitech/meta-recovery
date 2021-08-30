@@ -7,7 +7,7 @@
 TPSDK_VERSION ?= "1.0"
 TPSDK_REVISION ?= "0"
 TPSDK_RCCYCLE ?= "0"
-TPSDK_REPO ?= "gitlab.tpl"
+TPSDK_REPO ?= "github.com"
 
 #
 # Yocto SDK settings

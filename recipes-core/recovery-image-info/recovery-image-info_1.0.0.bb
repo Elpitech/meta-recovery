@@ -4,9 +4,9 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=801f80980d171dd6425610833a22dbe6"
 DEPENDS = "coreutils-native"
 
-TPSDK_REPO ?= "gitlab.tpl"
+TPSDK_REPO ?= "github.com"
 
-SRC_URI = "git://${TPSDK_REPO}/utils/recovery-image-info;protocol=ssh;user=git"
+SRC_URI = "git://${TPSDK_REPO}/Elpitech/baikal-t-recovery-image-info;protocol=ssh;user=git"
 SRCREV = "AUTOINC"
 
 S = "${WORKDIR}/git"
