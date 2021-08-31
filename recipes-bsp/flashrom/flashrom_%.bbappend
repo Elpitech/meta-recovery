@@ -1,4 +1,4 @@
-TPSDK_REPO ?= "gitlab.tpl"
+TPSDK_REPO ?= "gitlab.elp"
 
 KBRANCH = "${PV}.x-tp"
 SRC_URI = "git://${TPSDK_REPO}/utils/flashrom.git;protocol=ssh;user=git;branch=${KBRANCH} \

@@ -5,7 +5,7 @@ SECTION = "base"
 DEPENDS = "ncurses zlib"
 RDEPENDS_${PN} = "btflash dialog pv"
 
-TPSDK_REPO ?= "gitlab.tpl"
+TPSDK_REPO ?= "gitlab.elp"
 KBRANCH = "master"
 
 PV = "1.5"

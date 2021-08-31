@@ -1,10 +1,10 @@
 SUMMARY = "Recovery Image information parser"
-HOMEPAGE = "https://github.com/T-Platforms/recovery-image-info"
+HOMEPAGE = "https://github.com/Elpitech/baikal-t-recovery-image-info"
 LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=801f80980d171dd6425610833a22dbe6"
 DEPENDS = "coreutils-native"
 
-TPSDK_REPO ?= "gitlab.tpl"
+TPSDK_REPO ?= "gitlab.elp"
 
 SRC_URI = "git://${TPSDK_REPO}/utils/recovery-image-info;protocol=ssh;user=git"
 SRCREV = "AUTOINC"
