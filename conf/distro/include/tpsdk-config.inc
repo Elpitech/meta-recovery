@@ -7,7 +7,7 @@
 TPSDK_VERSION ?= "1.0"
 TPSDK_REVISION ?= "0"
 TPSDK_RCCYCLE ?= "0"
-TPSDK_REPO ?= "gitlab.elp"
+TPSDK_REPO ?= "gitlab.elpitech.ru"
 
 #
 # Yocto SDK settings
@@ -26,6 +26,6 @@ SDK_VERSION := "${TPSDK_VERSION}.${TPSDK_REVISION}${@'-rc${TPSDK_RCCYCLE}' if '$
 SDK_NAME = "${DISTRO}-${MACHINE}-${SDK_ARCH}-${TUNE_PKGARCH}"
 SDKPATH = "/opt/${DISTRO}-${MACHINE}${SDK_VENDOR}/${SDK_VERSION}"
 SDK_EXT_TYPE = "full"
-#SDKIMAGE_FEATURES_append = " staticdev-pkg"
-SDK_HOST_TOOLCHAIN = " nativesdk-flashrom nativesdk-openocd nativesdk-recovery-image-info"
+#SDKIMAGE_FEATURES:append = " staticdev-pkg"
+SDK_HOST_TOOLCHAIN = " nativesdk-openocd nativesdk-recovery-image-info"
 #SDK_TARGET_TOOLCHAIN = " kernel-devsrc"

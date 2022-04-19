@@ -1,7 +1,7 @@
 
 ALTERNATIVE_PRIORITY = "100"
 
-ALTERNATIVE_${PN} += "flashcp flash_lock flash_unlock nandwrite nanddump"
+ALTERNATIVE:${PN} += "flashcp flash_lock flash_unlock nandwrite nanddump"
 ALTERNATIVE_LINK_NAME[flashcp] = "${sbindir}/flashcp"
 ALTERNATIVE_LINK_NAME[flash_lock] = "${sbindir}/flash_lock"
 ALTERNATIVE_LINK_NAME[flash_unlock] = "${sbindir}/flash_unlock"

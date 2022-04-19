@@ -6,7 +6,7 @@
 #
 # End result is:
 #
-# Binaty blob with common settings of the build system and utilities
+# Binary blob with common settings of the build system and utilities
 # used to create the image
 
 # External variables
@@ -72,7 +72,7 @@ IMAGE_INFO_BASE_NAME ??= "${PN}-${MACHINE}-${DATETIME}"
 IMAGE_INFO_SYMLINK_NAME ??= "${PN}-${MACHINE}"
 IMAGE_INFO_BASE_NAME[vardepsexclude] += "DATETIME"
 
-DEPENDS_append = " coreutils-native xxd-native"
+DEPENDS:append = " coreutils-native xxd-native"
 
 image_info_dump_int() {
     size="$1"

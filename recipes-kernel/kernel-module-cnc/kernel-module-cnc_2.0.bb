@@ -5,7 +5,7 @@ SECTION = "kernel"
 
 inherit module
 
-TPSDK_REPO ?= "gitlab.elp"
+TPSDK_REPO ?= "gitlab.elpitech.ru"
 
 SRC_URI = "git://${TPSDK_REPO}/baikal-t/cnc;protocol=ssh;user=git"
 SRCREV = "AUTOINC"

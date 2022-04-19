@@ -8,7 +8,7 @@ SRC_URI[md5sum] = "578abac1deb50de4c7ae6838e2e70aca"
 REALTEK_FIRMWARE_BIN ?= "R_4838_ALC4040_ECS_Headset+LINEIN_V03_20190218.rfw"
 FIRMWARE_BIN = "${REALTEK_FIRMWARE_BIN}"
 
-FILES_${PN} = "/usr \
+FILES:${PN} = "/usr \
   /usr/lib \
   /usr/lib/realtek \
   /usr/lib/realtek/${FIRMWARE_BIN} \
@@ -22,7 +22,7 @@ S = "${WORKDIR}/${PN}-${PV}"
 INITSCRIPT_NAME = "realtek"
 INITSCRIPT_PARAMS = "start 04 S ."
 
-INSANE_SKIP_${PN} = "already-stripped"
+INSANE_SKIP:${PN} = "already-stripped"
 
 inherit update-rc.d
 

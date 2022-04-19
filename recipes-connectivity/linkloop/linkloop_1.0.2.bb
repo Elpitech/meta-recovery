@@ -16,7 +16,7 @@ INITSCRIPT_NAME = "linkloopd"
 # INITSCRIPT_PARAMS = "defaults 20"
 INITSCRIPT_PARAMS = "stop 10 0 1 6 ."
 
-do_install_append () {
+do_install:append () {
 	install -d ${D}${sysconfdir}
 	install -d ${D}${sysconfdir}/init.d
 

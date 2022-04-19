@@ -1,5 +1,5 @@
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:${THISDIR}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:${THISDIR}/files:"
 
 SRC_URI += "file://BusyBox-stty-Add-RS485-config-options-${PV}.patch \
             file://generic.cfg \
@@ -54,7 +54,7 @@ DEPENDS += "openssl-native"
 
 RECOVERY_PWD_ROOT ?= ""
 
-do_install_append() {
+do_install:append() {
 
     if [ "${RECOVERY_PWD_ROOT}" != "" ]; then
         pw=$(openssl passwd -1 ${RECOVERY_PWD_ROOT})

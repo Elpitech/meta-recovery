@@ -89,7 +89,7 @@ KERNEL_EXTRA_IMAGETYPES ?= "vmlinux vmlinuz.bin vmlinux.bin"
 KERNEL_DEVICETREE_BUNDLE ?= "0"
 KERNEL_IMAGE_MAXSIZE ?= "16384"
 KERNEL_USES_DEVFS ?= "1"
-UBOOT_SIGN_ENABLE ?= "1"
+UBOOT_SIGN_ENABLE ?= "0"
 UBOOT_SIGN_KEYNAME ?= "baikal"
 
 # Initramfs is used either as recovery rootfs image or to preload some kernel modules before

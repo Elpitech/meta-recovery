@@ -1,5 +1,5 @@
 SUMMARY = "Baikal-T SPI-flash recovery image"
-DESCRIPTION = "Small image hidden in the Baikal-T SPI-flash memory device"
+DESCRIPTION = "Small image for the Baikal-T SPI-flash memory"
 LICENSE = "MIT"
 
 PV = "${TPSDK_VERSION}"
@@ -10,7 +10,7 @@ USE_DEVFS = "${KERNEL_USES_DEVFS}"
 export IMAGE_BASENAME = "${MLPREFIX}${PN}"
 
 # Build image just as initramfs requested. That's what recovery image after all:
-# comprehensive initramfs image
+# a comprehensive initramfs image
 IMAGE_FSTYPES = "${INITRAMFS_FSTYPES}"
 IMAGE_ROOTFS_SIZE = "${INITRAMFS_MAXSIZE}"
 IMAGE_ROOTFS_EXTRA_SPACE = "0"
@@ -39,8 +39,8 @@ PACKAGE_INSTALL += "${RECOVERY_IMAGE_EXTRA_INSTALL} ${RECOVERY_IMAGE_TEST_BENCHE
 
 # List of host/target utilities added to be part of SDKs.
 # NOTE Never set them globally, otherwise buildtools-tarball gets crazy.
-TOOLCHAIN_HOST_TASK_append = " ${SDK_HOST_TOOLCHAIN}"
-TOOLCHAIN_TARGET_TASK_append = " ${SDK_TARGET_TOOLCHAIN}"
+TOOLCHAIN_HOST_TASK:append = " ${SDK_HOST_TOOLCHAIN}"
+TOOLCHAIN_TARGET_TASK:append = " ${SDK_TARGET_TOOLCHAIN}"
 
 # Locales to be added to the image
 # NOTE They are very heavy!

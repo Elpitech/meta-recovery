@@ -5,12 +5,12 @@ require kmod.inc
 
 DEPENDS += "nativesdk-zlib"
 
-inherit nativesdk bash-completion
+inherit bash-completion nativesdk 
 
 SRC_URI += "file://Change-to-calling-bswap_-instead-of-htobe-and-be-toh.patch \
            "
 
-do_install_append (){
+do_install:append (){
 	for tool in depmod insmod lsmod modinfo modprobe rmmod
 	do
 		ln -s kmod ${D}${bindir}/$tool

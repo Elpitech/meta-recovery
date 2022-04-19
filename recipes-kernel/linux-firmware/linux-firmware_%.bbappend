@@ -3,7 +3,7 @@
 PACKAGES =+ "${PN}-radeon-oland"
 
 radeon_fw_dir = "${nonarch_base_libdir}/firmware/radeon"
-FILES_${PN}-radeon-oland = "${radeon_fw_dir}/oland_mc.bin \
+FILES:${PN}-radeon-oland = "${radeon_fw_dir}/oland_mc.bin \
                             ${radeon_fw_dir}/oland_smc.bin \
                             ${radeon_fw_dir}/oland_ce.bin \
                             ${radeon_fw_dir}/oland_pfp.bin \

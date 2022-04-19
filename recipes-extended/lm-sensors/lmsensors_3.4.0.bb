@@ -15,13 +15,13 @@ SRC_URI = "https://github.com/groeck/lm-sensors/archive/${@'V${PV}'.replace('.',
 SRC_URI[md5sum] = "1e9f117cbfa11be1955adc96df71eadb"
 SRC_URI[sha256sum] = "e334c1c2b06f7290e3e66bdae330a5d36054701ffd47a5dde7a06f9a7402cb4e"
 
-S = "${WORKDIR}/lm-sensors-${@'${PV}'.replace('.','-')}/"
+S = "${WORKDIR}/lm-sensors-${@'${PV}'.replace('.','-')}"
 
 EXTRA_OEMAKE = 'LINUX=${STAGING_KERNEL_DIR} EXLDFLAGS="${LDFLAGS}" \
 		MACHINE=${TARGET_ARCH} PREFIX=${prefix} CC="${CC}" \
 		AR="${AR}" MANDIR=${mandir}'
 
-INSANE_SKIP_${PN} += "installed-vs-shipped"
+INSANE_SKIP:${PN} += "installed-vs-shipped"
 
 do_compile() {
 	oe_runmake user PROG_EXTRA=sensors
@@ -35,17 +35,17 @@ PACKAGES =  "libsensors libsensors-dev libsensors-staticdev libsensors-dbg libse
 PACKAGES =+ "lmsensors-sensors lmsensors-sensors-dbg lmsensors-sensors-doc"
 PACKAGES =+ "lmsensors-scripts"
 
-FILES_lmsensors-scripts  = "${bindir}/*.pl ${bindir}/ddcmon ${bindir}/sensors-conf-convert"
-FILES_lmsensors-scripts += "${sbindir}/fancontrol* ${sbindir}/pwmconfig ${sbindir}/sensors-detect"
+FILES:lmsensors-scripts  = "${bindir}/*.pl ${bindir}/ddcmon ${bindir}/sensors-conf-convert"
+FILES:lmsensors-scripts += "${sbindir}/fancontrol* ${sbindir}/pwmconfig ${sbindir}/sensors-detect"
 RDEPENDS_lmsensors-scripts += "lmsensors-sensors perl bash"
 RDEPENDS_lmsensors-apps += "perl-module-strict perl-module-vars perl-module-warnings-register perl-module-warnings"
 RDEPENDS_lmsensors-scripts += "perl-module-fcntl perl-module-exporter perl-module-xsloader perl-module-exporter-heavy perl-module-file-basename perl-module-constant"
 
-FILES_lmsensors-sensors = "${bindir}/sensors ${sysconfdir}"
-FILES_lmsensors-sensors-dbg += "${bindir}/.debug/sensors"
-FILES_lmsensors-sensors-doc = "${mandir}/man1 ${mandir}/man5 ${mandir}/man8"
-FILES_libsensors = "${libdir}/libsensors${SOLIBS}"
-FILES_libsensors-dbg += "${libdir}/.debug"
-FILES_libsensors-dev = "${libdir}/libsensors${SOLIBSDEV} ${includedir}"
-FILES_libsensors-staticdev = "${libdir}/libsensors.a"
-FILES_libsensors-doc = "${mandir}/man3"
+FILES:lmsensors-sensors = "${bindir}/sensors ${sysconfdir}"
+FILES:lmsensors-sensors-dbg += "${bindir}/.debug/sensors"
+FILES:lmsensors-sensors-doc = "${mandir}/man1 ${mandir}/man5 ${mandir}/man8"
+FILES:libsensors = "${libdir}/libsensors${SOLIBS}"
+FILES:libsensors-dbg += "${libdir}/.debug"
+FILES:libsensors-dev = "${libdir}/libsensors${SOLIBSDEV} ${includedir}"
+FILES:libsensors-staticdev = "${libdir}/libsensors.a"
+FILES:libsensors-doc = "${mandir}/man3"

@@ -1,5 +1,5 @@
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 RECOVERY_FONT ?= ""
 
@@ -15,7 +15,7 @@ SRC_URI += "file://rcS-default \
 
 HALTARGS = "-f"
 
-do_install_append () {
+do_install:append () {
 	install -d ${D}${sysconfdir}/default
 	install -m 0644 ${WORKDIR}/rcS-default ${D}${sysconfdir}/default/rcS
 

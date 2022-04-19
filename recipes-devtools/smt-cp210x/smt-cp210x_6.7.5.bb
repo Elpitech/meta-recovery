@@ -16,10 +16,10 @@ inherit cmake
 
 BBCLASSEXTEND += "native nativesdk"
 
-FILES_${PN} += "${sysconfdir}/smt/cp210x"
-RDEPENDS_${PN} += "libusb1 util-linux-libuuid"
+FILES:${PN} += "${sysconfdir}/smt/cp210x"
+RDEPENDS:${PN} += "libusb1 util-linux-libuuid"
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}${sysconfdir}/smt/cp210x
 	install -m 0644 ${WORKDIR}/cp2108_p234_rs485.configuration ${D}${sysconfdir}/smt/cp210x
 
