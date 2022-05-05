@@ -40,6 +40,7 @@ SRC_URI += "file://BusyBox-stty-Add-RS485-config-options-${PV}.patch \
             file://tac.cfg \
             file://fgconsole.cfg \
             file://kbd_mode.cfg \
+	    file://taskset.cfg \
             file://pipe_progress.cfg"
 
 SRC_URI += "file://rcK \
