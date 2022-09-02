@@ -2,7 +2,7 @@ SUMMARY = "Realtek firmware and utility"
 LICENSE = "CLOSED"
 SECTION = "base"
 
-SRC_URI = "http://update.t-platforms.ru/dists/tpsdk/${PN}-${PV}.tar.gz"
+SRC_URI = "http://update.elpitech.ru/dists/tpsdk/${PN}-${PV}.tar.gz"
 SRC_URI[md5sum] = "578abac1deb50de4c7ae6838e2e70aca"
 
 REALTEK_FIRMWARE_BIN ?= "R_4838_ALC4040_ECS_Headset+LINEIN_V03_20190218.rfw"

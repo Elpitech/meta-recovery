@@ -6,9 +6,9 @@
   layer, with a matching branch (i.e. master of oe-core and master of
   meta-sourcery).
 - [bitbake](https://github.com/openembedded/bitbake), with a matching branch.
-- [meta-external-toolchain](https://github.com/T-platforms/yocto/meta-external-toolchain)
+- [meta-external-toolchain](https://gitlab.elpitech.ru/distro/yocto/meta-external-toolchain)
   with master branch
-- [meta-baikal-t](https://github.com/T-platforms/yocto/meta-baikal-t)
+- [meta-baikal-t](https://gitlab.elpitech.ru/distro/yocto/meta-baikal-t)
   with master branch
 
 ## Usage & Instructions
@@ -58,19 +58,6 @@ As a result of the image build process, you'll find the
 baikal-image-recovery.rom file in the build/tmp/deploy/image/<machine>/
 directory. SDK is supplied with flashrom utility, which can be burned to
 the Baikal-T SPI-flash storage.
-
-## Contributing
-
-To contribute to this layer, please fork and submit pull requests to the
-github [repository](https://github.com/T-Platforms/yocto/meta-recovery), or open
-issues for any bugs you find, or feature requests you have.
-
-## Maintainer
-
-This layer is maintained by [T-platforms](https://www.t-platforms.ru/).
-Please direct all support requests for this layer to the GitHub repository
-issues interface. Optionally you can try to communicate with primary
-developer: Serge Semin <fancer.lancer@gmail.com>
 
 ## To Do List
 
