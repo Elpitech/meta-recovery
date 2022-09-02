@@ -1,6 +1,6 @@
 #!/bin/sh
 # Copyright (C) 2018 T-platforms JSC.
-# Licensed on GPL-v2
+# Licensed under GPL-v2
 
 initfs_enabled() {
 	return 0
