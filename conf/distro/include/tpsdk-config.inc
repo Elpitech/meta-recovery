@@ -4,7 +4,7 @@
 # SDK version is statically set here so to have at least some value used
 # by SDK-specific meta code.
 #
-TPSDK_VERSION ?= "1.0"
+TPSDK_VERSION ?= "1.1"
 TPSDK_REVISION ?= "0"
 TPSDK_RCCYCLE ?= "0"
 TPSDK_REPO ?= "gitlab.elpitech.ru"
